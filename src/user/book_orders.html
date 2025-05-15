@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/public/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/public/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="../assets/css/feathericon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons@4.29.1/dist/feather.min.css">
+
+
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.min.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href="../assets/css/aos.css">
+    <!-- Main CSS -->
+
+    <link rel="stylesheet" href="../assets/css/css/custom.css">
+    <title>Home Service</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="">
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+
+            <!-- Header -->
+            <header class="header header-custom header-fixed header-one">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg header-nav">
+                        <div class="navbar-header">
+                            <a id="mobile_btn" href="javascript:void(0);">
+                                <span class="bar-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </a>
+                            <a href="/public/html/index.html" class="navbar-brand logo">
+                                <img src="/public/logo.png" class="img-fluid" alt="Logo">
+                            </a>
+                        </div>
+                        <div class="main-menu-wrapper">
+                            <div class="menu-header">
+                                <a href="/public/html/index.html" class="menu-logo">
+                                    <img src="/public/logo-removebg.png" class="img-fluid" alt="Logo">
+                                </a>
+                                <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <ul class="main-nav">
+                                <li class="has-submenu megamenu">
+                                    <a href="./home.html">Trang chủ </a>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="./services.html">Dịch vụ </a>
+                                </li>
+                                <li class="has-submenu active">
+                                    <a href="#">Đơn hàng<i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="./book_orders.html">Đặt lịch sửa chữa</a></li>
+                                        <li><a href="./find_orders.html">Quản lí đơn hàng</a></li>
+                                        <li><a href="./chat.html">Chat</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="/public/html/NoFound.html">Blog <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="./create_blog.html">Đăng bài</a></li>
+                                        <li><a href="./blog_new.html">Bài viết mới</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="./support.html">Hỗ trợ </a>
+                                </li>
+                                <li class="searchbar">
+                                    <a href="#"><i class="fas fa-search"></i></a>
+                                    <div class="togglesearch">
+                                        <form action="./search.html">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control">
+                                                <button type="submit" class="btn">Search</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </li>
+                                <li class="login-link"><a href="./login.html"> Đăng nhập / Đăng kí</a></li>
+                                <li class="register-btn">
+                                    <a href="./register.html" class="btn reg-btn"><i class="feather-user"></i>Đăng
+                                        kí</a>
+                                </li>
+                                <li class="register-btn">
+                                    <a href="./login.html" class="btn btn-primary log-btn"><i
+                                            class="feather-lock"></i>Đăng nhập</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+            <!-- /Header -->
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-bar-two">
+                <div class="container">
+                    <div class="row align-items-center inner-banner">
+                        <div class="col-md-12 col-12 text-center">
+                            <h2 class="breadcrumb-title">Đặt lịch</h2>
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                                    <li class="breadcrumb-item" aria-current="page">Đặt lịch</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- /Breadcrumb -->
+            <!-- Page Content -->
+            <div class="content">
+                <!-- Book -->
+                <div class="book">
+                    <div class="container">
+                        <h2 class="text-center my-4">Đặt lịch sửa chữa</h2>
+                        <form id="booking-form" class="booking-form row g-3">
+                            <!-- Thông tin cá nhân -->
+                            <div class="col-md-6">
+                                <label for="name" class="form-label">Tên khách hàng <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" placeholder="Nhập họ và tên" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="phone" class="form-label">Số điện thoại <span
+                                        class="text-danger">*</span></label>
+                                <input type="tel" class="form-control" id="phone" placeholder="Nhập số điện thoại"
+                                    required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="email" class="form-control" id="email" placeholder="Nhập email" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="address" class="form-label">Địa chỉ <span
+                                        class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="address" placeholder="Nhập địa chỉ"
+                                    required>
+                            </div>
+
+                            <!-- Dịch vụ -->
+                            <div class="col-md-6">
+                                <label for="service-category" class="form-label">Loại dịch vụ <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="service-category" required>
+                                    <option value="" disabled selected>Chọn loại dịch vụ</option>
+                                    <option value="Điện tử">Điện tử</option>
+                                    <option value="Điện lạnh & Điện nước">Điện lạnh & Điện nước</option>
+                                    <option value="Nội thất & nhà cửa">Nội thất & nhà cửa</option>
+                                    <option value="Ô tô, xe máy">Ô tô, xe máy</option>
+                                    <option value="Vệ sinh & Bảo trì">Vệ sinh & Bảo trì</option>
+                                    <option value="CNTT & Viễn thông">CNTT & Viễn thông</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="service-detail" class="form-label">Dịch vụ cụ thể <span
+                                        class="text-danger">*</span></label>
+                                <select class="form-select" id="service-detail" required>
+                                    <option value="" disabled selected>Chọn dịch vụ cụ thể</option>
+                                    <!-- Options sẽ được load động bằng JS -->
+                                </select>
+                            </div>
+
+                            <!-- Mô tả lỗi -->
+                            <div class="col-12">
+                                <label for="error-description" class="form-label">Mô tả chi tiết lỗi <span
+                                        class="text-danger">*</span></label>
+                                <textarea class="form-control" id="error-description" rows="4"
+                                    placeholder="Mô tả chi tiết hiện tượng, lỗi gặp phải..." required></textarea>
+                            </div>
+
+                            <!-- Upload media -->
+                            <div class="col-md-6">
+                                <label for="images" class="form-label">Hình ảnh minh họa</label>
+                                <div class="file-upload-area">
+                                    <input type="file" class="form-control" id="images" accept="image/*" multiple>
+                                    <div class="file-upload-preview" id="image-preview"></div>
+                                    <small class="text-muted">Tối đa 5 ảnh (mỗi ảnh ≤ 5MB)</small>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="video" class="form-label">Video minh họa</label>
+                                <div class="file-upload-area">
+                                    <input type="file" class="form-control" id="video" accept="video/*">
+                                    <div class="file-upload-preview" id="video-preview"></div>
+                                    <small class="text-muted">Chỉ tải lên 1 video (≤ 30MB)</small>
+                                </div>
+                            </div>
+
+                            <!-- Lựa chọn đặt lịch -->
+                            <div class="col-12">
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="bookingType" id="bookNow"
+                                        value="now" checked>
+                                    <label class="form-check-label fw-bold" for="bookNow">
+                                        Đặt ngay (kỹ thuật viên sẽ liên hệ trong 30 phút)
+                                    </label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="bookingType" id="bookLater"
+                                        value="later">
+                                    <label class="form-check-label fw-bold" for="bookLater">
+                                        Đặt lịch hẹn
+                                    </label>
+                                </div>
+                            </div>
+
+                            <!-- Phần thời gian hẹn (ẩn ban đầu) -->
+                            <div class="col-md-6 booking-time" style="display: none;">
+                                <label for="date" class="form-label">Ngày hẹn <span class="text-danger">*</span></label>
+                                <input type="date" class="form-control" id="date">
+                            </div>
+                            <div class="col-md-6 booking-time" style="display: none;">
+                                <label for="time" class="form-label">Thời gian <span
+                                        class="text-danger">*</span></label>
+                                <input type="time" class="form-control" id="time">
+                            </div>
+
+                            <!-- Ghi chú -->
+                            <div class="col-12">
+                                <label for="note" class="form-label">Ghi chú thêm</label>
+                                <textarea class="form-control" id="note" rows="3"
+                                    placeholder="Nhập ghi chú (nếu có)"></textarea>
+                            </div>
+
+                            <!-- Điều khoản và nút submit -->
+                            <div class="col-12">
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="checkbox" id="agree-terms" required>
+                                    <label class="form-check-label" for="agree-terms">
+                                        Tôi đồng ý với <a href="#">điều khoản dịch vụ</a> và <a href="#">chính sách bảo
+                                            mật</a>
+                                    </label>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-lg w-100">Xác nhận đặt lịch</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End Book -->
+            </div>
+            <!-- /Page Content -->
+
+            <!-- Footer -->
+            <footer class="footer footer-one">
+                <div class="footer-top aos" data-aos="fade-up">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="row container-item">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget footer-about">
+                                            <div class="footer-logo">
+                                                <a href="./home.html"><img src="/public/logo.png" alt="logo"></a>
+                                            </div>
+                                            <div class="footer-about-content">
+                                                <p>Dịch vụ sửa chữa tận nơi chuyên nghiệp - Nhanh chóng, uy tín, giá cả
+                                                    hợp
+                                                    lý, đảm bảo chất lượng với đội ngũ kỹ thuật viên giàu kinh nghiệm!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="row container-item">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="footer-widget footer-menu">
+                                                    <h2 class="footer-title">Đối với khách hàng</h2>
+                                                    <ul>
+                                                        <li><a href="./login.html">Đăng nhập</a></li>
+                                                        <li><a href="./register.html">Đăng kí</a></li>
+                                                        <li><a href="./book_orders.html">Đặt lịch sửa chữa</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="footer-widget footer-menu">
+                                                    <h2 class="footer-title">Đối với KTV</h2>
+                                                    <ul>
+                                                        <li><a href="./login.html">Đăng nhập</a></li>
+                                                        <li><a href="./find_orders.html">Quản lý đơn hàng</a></li>
+                                                        <li><a href="./find_orders.html">Quản lý doanh thu</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget footer-contact">
+                                            <h2 class="footer-title">Liên hệ với chúng tôi</h2>
+                                            <div class="footer-contact-info">
+                                                <div class="footer-address">
+                                                    <p><i class="fas fa-map-marker-alt"></i>Trương Định, Hoàng Mai, Hà
+                                                        Nội</p>
+                                                </div>
+                                                <div class="footer-address">
+                                                    <p><i class="fas fa-phone"></i>+84 36 346 8723</p>
+                                                </div>
+                                                <div class="footer-address mb-0">
+                                                    <p><i class="fas fa-mail-bulk"></i>son.hv203559@sis.hust.edu.vn</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget">
+                                            <h2 class="footer-title">Nhận thông báo của chúng tôi</h2>
+                                            <div class="subscribe-form">
+                                                <form action="#">
+                                                    <input type="email" class="form-control"
+                                                        placeholder="Nhập địa chỉ email của bạn">
+                                                    <button type="submit" class="btn">Gửi</button>
+                                                </form>
+                                            </div>
+                                            <div class="social-icon">
+                                                <ul>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-facebook"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-instagram"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i class="fab fa-twitter"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-linkedin-in"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="footer-widget footer-scope">
+                                    <h2 class="footer-title">Phạm vi hoạt động</h2>
+                                    <div class="footer-scope-img">
+                                        <img class="img-fluid" src="/src/assets/img/banner/footer-img.png"
+                                            alt="Scope-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <div class="row ">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="copyright-text">
+                                        <p class="mb-0"> Bản quyền © 2025 <a
+                                                href="https://themeforest.net/user/dreamstechnologies/portfolio"
+                                                target="_blank">ET4900.</a> Mọi quyền được bảo lưu.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+
+                                    <!-- Copyright Menu -->
+                                    <div class="copyright-menu">
+                                        <ul class="policy-menu">
+                                            <li><a href="privacy-policy.html">Chính sách bảo mật</a></li>
+                                            <li><a href="terms-condition.html">Điều khoản và Dịch vụ</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /Copyright Menu -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Copyright -->
+                    </div>
+                </div>
+            </footer>
+            <!-- /Footer -->
+        </div>
+        <!-- /Main Wrapper -->
+
+        
+
+    </div>
+
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Feather Icon JS -->
+    <script src="../assets/js/feather.min.js"></script>
+    <!-- Datepicker JS -->
+    <script src="../assets/js/moment.min.js"></script>
+    <script src="../assets/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="../assets/js/owl.carousel.min.js"></script>
+    <!-- Slick JS -->
+    <script src="../assets/js/slick.js"></script>
+    <!-- Animation JS -->
+    <script src="../assets/js/aos.js"></script>
+
+    <!-- Counter JS -->
+    <script src="../assets/js/counter.js"></script>
+
+    <!-- BacktoTop JS -->
+    <script src="../assets/js/backToTop.js"></script>
+
+    <!-- Custom JS -->
+    <script src="../assets/js/js/user.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const bookNow = document.getElementById('bookNow');
+        const bookLater = document.getElementById('bookLater');
+        const bookingTimeFields = document.querySelectorAll('.booking-time');
+
+        // Xử lý thay đổi lựa chọn
+        function handleBookingTypeChange() {
+            if (bookLater.checked) {
+                bookingTimeFields.forEach(field => {
+                    field.style.display = 'block';
+                    field.querySelector('input').required = true;
+                });
+            } else {
+                bookingTimeFields.forEach(field => {
+                    field.style.display = 'none';
+                    field.querySelector('input').required = false;
+                });
+            }
+        }
+
+        // Lắng nghe sự kiện thay đổi
+        bookNow.addEventListener('change', handleBookingTypeChange);
+        bookLater.addEventListener('change', handleBookingTypeChange);
+
+        // Khởi tạo ban đầu
+        handleBookingTypeChange();
+        // Xử lý preview ảnh
+        const imageInput = document.getElementById('images');
+        const imagePreview = document.getElementById('image-preview');
+
+        imageInput.addEventListener('change', function () {
+            imagePreview.innerHTML = '';
+            const files = this.files;
+
+            if (files.length > 5) {
+                alert('Bạn chỉ có thể tải lên tối đa 5 ảnh');
+                this.value = '';
+                return;
+            }
+
+            for (let i = 0; i < Math.min(files.length, 5); i++) {
+                const file = files[i];
+                if (!file.type.match('image.*')) continue;
+
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const previewItem = document.createElement('div');
+                    previewItem.className = 'preview-item';
+                    previewItem.innerHTML = `
+                    <img src="${e.target.result}" alt="Preview">
+                    <button type="button" class="remove-btn" data-index="${i}">&times;</button>
+                `;
+                    imagePreview.appendChild(previewItem);
+
+                    // Xử lý nút xóa ảnh
+                    previewItem.querySelector('.remove-btn').addEventListener('click', function () {
+                        const dt = new DataTransfer();
+                        const input = imageInput;
+
+                        for (let j = 0; j < input.files.length; j++) {
+                            if (j !== parseInt(this.getAttribute('data-index'))) {
+                                dt.items.add(input.files[j]);
+                            }
+                        }
+
+                        input.files = dt.files;
+                        previewItem.remove();
+                    });
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Xử lý preview video
+        const videoInput = document.getElementById('video');
+        const videoPreview = document.getElementById('video-preview');
+
+        videoInput.addEventListener('change', function () {
+            videoPreview.innerHTML = '';
+            const file = this.files[0];
+
+            if (!file.type.match('video.*')) return;
+
+            const videoUrl = URL.createObjectURL(file);
+            const previewItem = document.createElement('div');
+            previewItem.className = 'preview-item';
+            previewItem.innerHTML = `
+            <video width="100%" height="100%" controls>
+                <source src="${videoUrl}" type="${file.type}">
+            </video>
+            <button type="button" class="remove-btn">&times;</button>
+        `;
+            videoPreview.appendChild(previewItem);
+
+            // Xử lý nút xóa video
+            previewItem.querySelector('.remove-btn').addEventListener('click', function () {
+                videoInput.value = '';
+                videoPreview.innerHTML = '';
+                URL.revokeObjectURL(videoUrl);
+            });
+        });
+    });
+</script>
+
+</body>
+
+</html>

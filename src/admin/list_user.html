@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/public/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/public/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+		
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
+    
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="../assets/css/feathericon.min.css">
+    
+    <link rel="stylesheet" href="../assets/plugins/datatables/datatables.min.css">
+    
+    <!-- Main CSS -->
+
+    <link rel="stylesheet" href="../assets/css/css/admin.css">
+    <title>Home Service</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="">
+        <div class="main-wrapper">
+			<div class="admin">
+				<!-- Header -->
+				<div class="header">
+				
+					<!-- Logo -->
+					<div class="header-left">
+						<a href="admin.html" class="logo">
+							<img src="/public/logo.png" alt="Logo">
+						</a>
+						<a href="index.html" class="logo logo-small">
+							<img src="/public/Logo-small.png" alt="Logo" width="30" height="30">
+						</a>
+					</div>
+					<!-- /Logo -->
+					
+					<a href="javascript:void(0);" id="toggle_btn">
+						<i class="fe fe-text-align-left"></i>
+					</a>
+					
+					<div class="top-nav-search">
+						<form>
+							<input type="text" class="form-control" placeholder="Tìm kiếm">
+							<button class="btn" type="submit"><i class="fa fa-search"></i></button>
+						</form>
+					</div>
+					
+					<!-- Mobile Menu Toggle -->
+					<a class="mobile_btn" id="mobile_btn">
+						<i class="fa fa-bars"></i>
+					</a>
+					<!-- /Mobile Menu Toggle -->
+					
+					<!-- Header Right Menu -->
+					<ul class="nav user-menu">
+						<!-- Notifications -->
+						<li class="nav-item dropdown noti-dropdown">
+							<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+								<i class="fe fe-bell"></i> <span class="badge rounded-pill">3</span>
+							</a>
+							<div class="dropdown-menu notifications">
+								<div class="topnav-dropdown-header">
+									<span class="notification-title">Thông báo</span>
+									<a href="javascript:void(0)" class="clear-noti"> Xóa thông báo </a>
+								</div>
+								<div class="noti-content">
+									<ul class="notification-list">
+										<li class="notification-message">
+											<a href="#">
+												<div class="notify-block d-flex">
+													<span class="avatar avatar-sm flex-shrink-0">
+														<img class="avatar-img rounded-circle" alt="User Image" src="../assets/img/doctors/doctor-thumb-01.jpg">
+													</span>
+													<div class="media-body flex-grow-1">
+														<p class="noti-details"><span class="noti-title">Hoàng Sơn</span> Lịch sửa chữa <span class="noti-title">của bạn</span></p>
+														<p class="noti-time"><span class="notification-time">4 phút trước</span></p>
+													</div>
+												</div>
+											</a>
+										</li>
+										<li class="notification-message">
+											<a href="#">
+												<div class="notify-block d-flex">
+													<span class="avatar avatar-sm flex-shrink-0">
+														<img class="avatar-img rounded-circle" alt="User Image" src="../assets/img/patients/patient1.jpg">
+													</span>
+													<div class="media-body flex-grow-1">
+														<p class="noti-details"><span class="noti-title">Hoàng Sơn</span> Lịch sửa chữa <span class="noti-title">của bạn</span></p>
+														<p class="noti-time"><span class="notification-time">4 phút trước</span></p>
+													</div>
+												</div>
+											</a>
+										</li>
+										<li class="notification-message">
+											<a href="#">
+												<div class="notify-block d-flex">
+													<span class="avatar avatar-sm flex-shrink-0">
+														<img class="avatar-img rounded-circle" alt="User Image" src="../assets/img/patients/patient2.jpg">
+													</span>
+													<div class="media-body flex-grow-1">
+														<p class="noti-details"><span class="noti-title">Hoàng Sơn</span> Lịch sửa chữa <span class="noti-title">của bạn</span></p>
+														<p class="noti-time"><span class="notification-time">4 phút trước</span></p>
+													</div>
+												</div>
+											</a>
+										</li>
+										<li class="notification-message">
+											<a href="#">
+												<div class="notify-block d-flex">
+													<span class="avatar avatar-sm flex-shrink-0">
+														<img class="avatar-img rounded-circle" alt="User Image" src="../assets/img/patients/patient3.jpg">
+													</span>
+													<div class="media-body flex-grow-1">
+														<p class="noti-details"><span class="noti-title">Hoàng Sơn</span> Lịch sửa chữa <span class="noti-title">của bạn</span></p>
+														<p class="noti-time"><span class="notification-time">4 phút trước</span></p>
+													</div>
+												</div>
+											</a>
+										</li>
+									</ul>
+								</div>
+								<div class="topnav-dropdown-footer">
+									<a href="#">Xem tất cả thông báo</a>
+								</div>
+							</div>
+						</li>
+						<!-- /Notifications -->
+						
+						<!-- User Menu -->
+						<li class="nav-item dropdown has-arrow">
+							<a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+								<span class="user-img"><img class="rounded-circle" src="../assets/img/profiles/avatar-01.jpg" width="31" alt="Ryan Taylor"></span>
+							</a>
+							<div class="dropdown-menu">
+								<div class="user-header">
+									<div class="avatar avatar-sm">
+										<img src="../assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+									</div>
+									<div class="user-text">
+										<h6>Nguyễn Văn Admin</h6>
+										<p class="text-muted mb-0">Quản trị viên</p>
+									</div>
+								</div>
+								<a class="dropdown-item" href="profile.html">Hồ sơ của bạn</a>
+								<a class="dropdown-item" href="settings.html">Cài đặt</a>
+								<a class="dropdown-item" href="login.html">Đăng xuất</a>
+							</div>
+						</li>
+						<!-- /User Menu -->
+						
+					</ul>
+					<!-- /Header Right Menu -->
+					
+				</div>
+				<!-- /Header -->
+				
+				<!-- Sidebar -->
+				<div class="sidebar" id="sidebar">
+					<div class="sidebar-inner slimscroll">
+						<div id="sidebar-menu" class="sidebar-menu">
+							<ul>
+								<li class="menu-title"> 
+									<span>Danh mục</span>
+								</li>
+								<li class="active"> 
+									<a href="admin.html"><i class="fas fa-home"></i> <span>Bảng điều khiển</span></a>
+								</li>
+								<li> 
+									<a href="list_apoinment.html"><i class="fas fa-calendar-check"></i> <span>Đơn đặt hẹn</span></a>
+								</li>
+								<li> 
+									<a href="list_technician.html"><i class="fas fa-user-nurse"></i><span>Kỹ thuật viên</span></a>
+								</li>
+								<li> 
+									<a href="list_user.html"><i class="fas fa-user"></i><span>Người dùng</span></a>
+								</li>
+								<li> 
+									<a href="list_service.html"><i class="fas fa-tasks"></i></i> <span>Dịch vụ</span></a>
+								</li>
+								<li> 
+									<a href="gift.html"><i class="fas fa-gift"></i> <span>Khuyễn mãi & Ưu đãi</span></a>
+								</li>
+								<li> 
+									<a href="form_register.html"><i class="fas fa-user-plus"></i> <span>Đơn đăng ký</span> <span class="order-qty">(2)</span></a>
+								</li>
+								<li> 
+									<a href="calender.html"><i class="fas fa-calendar-alt"></i><span>Lịch</span></a>
+								</li>
+								<li> 
+									<a href="chat.html"><i class="fas fa-comment-dots"></i></i> <span>Chat</span></a>
+								</li>
+								<li> 
+									<a href="ratting.html"><i class="fas fa-star"></i><span>Đánh giá</span></a>
+								</li>
+								<li> 
+									<a href="payment.html"><i class="fab fa-paypal"></i></i> <span>Thanh toán</span></a>
+								</li>
+								<li class="submenu">
+									<a href="#"><i class="fas fa-chart-line"></i> <span>Báo cáo & Thống kê</span> <span class="menu-arrow"></span></a>
+									<ul style="display: none;">
+										<li><a href="report.html">Thống kê doanh thu</a></li>
+										<li><a href="invoice-report.html">Thống kê doanh thu</a></li>
+										<li><a href="invoice-report.html">Thống kê doanh thu</a></li>
+									</ul>
+								</li>
+								<li> 
+									<a href="setting.html"><i class="fas fa-cogs"></i><span>Cài đặt hệ thống</span></a>
+								</li>
+								<li> 
+									<a href="support.html"><i class="fas fa-question-circle"></i> <span>Hỗ trợ và Phản hồi</span></a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- /Sidebar -->
+				
+				<!-- Page Wrapper -->
+                <div class="page-wrapper">
+                    <div class="content container-fluid">
+                    
+                        <!-- Page Header -->
+                        <div class="page-header">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h3 class="page-title">Danh sách khách hàng</h3>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="index.html">Bảng điều khiển</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:(0);">Tài khoản</a></li>
+                                        <li class="breadcrumb-item active">Khách hàng</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Page Header -->
+                        
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <table class="datatable table table-hover table-center mb-0 ">
+                                                <thead>
+                                                    <tr>
+                                                        <th>ID</th>
+                                                        <th>Tên KTV</th>
+                                                        <th>Tuổi</th>
+                                                        <th>Số điện thoại</th>
+                                                        <th>Email</th>
+                                                        <th>Bắt đầu từ</th>
+                                                        <th>Địa chỉ</th>
+                                                        <th>Đơn đã sửa</th>
+                                                        <th>Trạng thái</th>
+                                                        <th>Cập nhật trạng thái</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    <tr >
+                                                        <td>#TN0001</td>
+                                                        <td>
+                                                            <h2 class="table-avatar">
+                                                                <a href="profile.html" class="avatar avatar-sm me-2"><img class="avatar-img rounded-circle" src="../assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+                                                                <a href="profile.html">Hoàng Văn Thợ</a>
+                                                            </h2>
+                                                        </td>
+                                                        <td>29</td>
+                                                        <td>0346458714</td>
+                                                        <td>hoangsonbalal@gmail.com</td>
+                                                        <td>14/10/2023 <br><small>02.59 AM</small></td>
+                                                        <td>số 15 ngách 78 ngõ Giáp Bát <br> Phường Giáp Bát, quận Hoàng Mai, Hà Nội</td>
+                                                        <td>100</td>
+                                                        <td>
+                                                            <div class="status-toggle">
+                                                                <input type="checkbox" id="status_1" class="check" checked>
+                                                                <label for="status_1" class="checktoggle">checkbox</label>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div class="actions">
+                                                                <a class="btn btn-sm bg-success-light" data-bs-toggle="modal" href="#edit_specialities_details">
+                                                                    <i class="fa-solid fa-wrench"></i> Vô hiệu hóa
+                                                                </a>
+                                                                <a class="btn btn-sm bg-danger-light" data-bs-toggle="modal" href="#delete_modal">
+                                                                    <i class="fa-solid fa-trash-can"></i> Xóa
+                                                                </a>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+  
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>			
+                        </div>
+                        
+                    </div>			
+                </div>
+				<!-- /Page Wrapper -->
+			</div>
+		
+		
+        </div>
+    </div>
+
+</body>
+<script src="../assets/js/jquery-3.7.1.min.js"></script>
+		
+		<!-- Bootstrap Core JS -->
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+		
+		<!-- Slimscroll JS -->
+        <script src="../assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+		
+		<script src="../assets/plugins/datatables/jquery.dataTables.min.js"></script>
+		<script src="../assets/plugins/datatables/datatables.min.js"></script>
+		
+		<!-- Custom JS -->
+		<script  src="../assets/js/script.js"></script>
+
+
+</html>

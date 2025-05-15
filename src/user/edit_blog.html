@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="/public/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="/public/logo.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+
+    <!-- Fontawesome CSS -->
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/fontawesome.min.css">
+    <link rel="stylesheet" href="../assets/plugins/fontawesome/css/all.min.css">
+
+    <!-- Feathericon CSS -->
+    <link rel="stylesheet" href="../assets/css/feathericon.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/feather-icons@4.29.1/dist/feather.min.css">
+
+
+    <!-- Datepicker CSS -->
+    <link rel="stylesheet" href="../assets/css/bootstrap-datetimepicker.min.css">
+
+    <!-- Owl Carousel CSS -->
+    <link rel="stylesheet" href="../assets/css/owl.carousel.min.css">
+
+    <!-- Animation CSS -->
+    <link rel="stylesheet" href="../assets/css/aos.css">
+    <!-- Main CSS -->
+
+    <link rel="stylesheet" href="../assets/css/css/custom.css">
+    <title>Home Service</title>
+</head>
+
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="">
+        <!-- Main Wrapper -->
+        <div class="main-wrapper">
+
+ <!-- Header -->
+            <header class="header header-custom header-fixed header-one">
+                <div class="container">
+                    <nav class="navbar navbar-expand-lg header-nav">
+                        <div class="navbar-header">
+                            <a id="mobile_btn" href="javascript:void(0);">
+                                <span class="bar-icon">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
+                            </a>
+                            <a href="/public/html/index.html" class="navbar-brand logo">
+                                <img src="/public/logo.png" class="img-fluid" alt="Logo">
+                            </a>
+                        </div>
+                        <div class="main-menu-wrapper">
+                            <div class="menu-header">
+                                <a href="/public/html/index.html" class="menu-logo">
+                                    <img src="/public/logo-removebg.png" class="img-fluid" alt="Logo">
+                                </a>
+                                <a id="menu_close" class="menu-close" href="javascript:void(0);">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                            <ul class="main-nav">
+                                <li class="has-submenu megamenu">
+                                    <a href="./home.html">Trang chủ </a>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="./services.html">Dịch vụ </a>
+                                </li>
+                                <li class="has-submenu active">
+                                    <a href="#">Đơn hàng<i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="./book_orders.html">Đặt lịch sửa chữa</a></li>
+                                        <li><a href="./find_orders.html">Quản lí đơn hàng</a></li>
+                                        <li><a href="./chat.html">Chat</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="/public/html/NoFound.html">Blog <i class="fas fa-chevron-down"></i></a>
+                                    <ul class="submenu">
+                                        <li><a href="./create_blog.html">Đăng bài</a></li>
+                                        <li><a href="./blog_new.html">Bài viết mới</a></li>
+                                    </ul>
+                                </li>
+                                <li class="has-submenu">
+                                    <a href="./support.html">Hỗ trợ </a>
+                                </li>
+                            </ul>
+                        </div>
+                        <ul class="nav header-navbar-rht">
+                            <!-- Cart -->
+                            <li class="nav-item dropdown noti-nav view-cart-header me-3">
+                                <a href="#" class="dropdown-toggle nav-link p-0 position-relative"
+                                    data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-cart-shopping"></i> <small class="unread-msg1">7</small>
+                                </a>
+                                <div class="dropdown-menu notifications dropdown-menu-end">
+                                    <div class="shopping-cart">
+                                        <ul class="shopping-cart-items list-unstyled">
+                                            <li class="clearfix">
+                                                <div class="close-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                                                <a href="./services.html"><img class="avatar-img rounded"
+                                                        src="../assets/img/logo_service/dien_lanh.svg"
+                                                        alt="User Image"></a>
+                                                <a href="./services.html" class="item-name">Điện lạnh</a>
+                                                <span class="item-price">849.000đ</span>
+                                            </li>
+
+                                            <li class="clearfix">
+                                                <div class="close-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                                                <a href="./services.html"><img class="avatar-img rounded"
+                                                        src="../assets/img/logo_service/dien_tu.svg"
+                                                        alt="User Image"></a>
+                                                <a href="./services.html" class="item-name">Điện tử</a>
+                                                <span class="item-price">120.000đ</span>
+                                            </li>
+
+                                            <li class="clearfix">
+                                                <div class="close-icon"><i class="fa-solid fa-circle-xmark"></i></div>
+                                                <a href="./services.html"><img class="avatar-img rounded"
+                                                        src="../assets/img/logo_service/nha_cua.svg"
+                                                        alt="User Image"></a>
+                                                <a href="./services.html" class="item-name">Nhà cửa</a>
+                                                <span class="item-price">129.000đ.99</span>
+                                            </li>
+                                        </ul>
+                                        <div class="clinic-booking pt-3">
+                                            <a class="apt-btn" href="cart.html">Xem tất cả</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- /Cart -->
+
+                            <!-- Notifications -->
+                            <li class="nav-item dropdown noti-nav me-3 pe-0">
+                                <a href="#" class="dropdown-toggle nav-link p-0" data-bs-toggle="dropdown">
+                                    <i class="fa-solid fa-bell"></i> <span class="badge">5</span>
+                                </a>
+                                <div class="dropdown-menu notifications dropdown-menu-end ">
+                                    <div class="topnav-dropdown-header">
+                                        <span class="notification-title">Thông báo</span>
+                                    </div>
+                                    <div class="noti-content">
+                                        <ul class="notification-list">
+                                            <li class="notification-message">
+                                                <a href="#">
+                                                    <div class="notify-block d-flex">
+                                                        <span class="avatar">
+                                                            <img class="avatar-img" alt="Ruby perin"
+                                                                src="../assets/img/doctors/doctor-thumb-02.jpg">
+                                                        </span>
+                                                        <div class="media-body">
+                                                            <h6>Travis Tremble <span class="notification-time">18.30
+                                                                    PM</span></h6>
+                                                            <p class="noti-details">Sent a amount of 210.000đ for his
+                                                                Appointment <span class="noti-title">Dr.Ruby perin
+                                                                </span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="notification-message">
+                                                <a href="#">
+                                                    <div class="notify-block d-flex">
+                                                        <span class="avatar">
+                                                            <img class="avatar-img" alt="Hendry Watt"
+                                                                src="../assets/img/doctors/doctor-thumb-02.jpg">
+                                                        </span>
+                                                        <div class="media-body">
+                                                            <h6>Travis Tremble <span class="notification-time">12 Min
+                                                                    Ago</span></h6>
+                                                            <p class="noti-details"> has booked her appointment to <span
+                                                                    class="noti-title">Dr. Hendry Watt</span></p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="notification-message">
+                                                <a href="#">
+                                                    <div class="notify-block d-flex">
+                                                        <div class="avatar">
+                                                            <img class="avatar-img" alt="Maria Dyen"
+                                                                src="../assets/img/doctors/doctor-thumb-02.jpg">
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h6>Travis Tremble <span class="notification-time">6 Min
+                                                                    Ago</span></h6>
+                                                            <p class="noti-details"> Sent a amount 210.000đ for his
+                                                                Appointment
+                                                                <span class="noti-title">Dr.Maria Dyen</span>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                            <li class="notification-message">
+                                                <a href="#">
+                                                    <div class="notify-block d-flex">
+                                                        <div class="avatar avatar-sm">
+                                                            <img class="avatar-img" alt="client-image"
+                                                                src="../assets/img/doctors/doctor-thumb-02.jpg">
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <h6>Travis Tremble <span class="notification-time">8.30
+                                                                    AM</span></h6>
+                                                            <p class="noti-details"> Send a message to his doctor</p>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </li>
+                            <!-- /Notifications -->
+
+                            <!-- User Menu -->
+                            <li class="nav-item dropdown has-arrow logged-item">
+                                <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown">
+                                    <span class="user-img">
+                                        <img class="rounded-circle" src="../assets/img/patients/patient.jpg" width="31"
+                                            alt="Hoàng Văn Khách">
+                                    </span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-end">
+                                    <div class="user-header">
+                                        <div class="avatar avatar-sm">
+                                            <img src="../assets/img/patients/patient.jpg" alt="User Image"
+                                                class="avatar-img rounded-circle">
+                                        </div>
+                                        <div class="user-text">
+                                            <h6>Hoàng Văn Khách</h6>
+                                            <p class="text-muted mb-0">Khách hàng</p>
+                                        </div>
+                                    </div>
+                                    <a class="dropdown-item" href="./dashbroad_user.html">Bảng điều khiển</a>
+                                    <a class="dropdown-item" href="./profile_user.html">Hồ sơ</a>
+                                    <a class="dropdown-item" href="./login.html">Đăng xuất</a>
+                                </div>
+                            </li>
+                            <!-- /User Menu -->
+
+                        </ul>
+                    </nav>
+                </div>
+            </header>
+            <!-- /Header -->
+
+            <!-- Breadcrumb -->
+            <div class="breadcrumb-bar-two">
+                <div class="container">
+                    <div class="row align-items-center inner-banner">
+                        <div class="col-md-12 col-12 text-center">
+                            <h2 class="breadcrumb-title">Sửa bài viết</h2>
+                            <nav aria-label="breadcrumb" class="page-breadcrumb">
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="index.html">Trang chủ</a></li>
+                                    <li class="breadcrumb-item" aria-current="page">Sửa bài viết</li>
+                                </ol>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Page Content -->
+            <div class="content">
+                <!-- Profile -->
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-5 col-lg-4 col-xl-3 theiaStickySidebar">
+                        <div class="profile-sidebar">
+                            <div class="widget-profile pro-widget-content">
+                                <div class="profile-info-widget">
+                                    <a href="#" class="booking-doc-img">
+                                        <img src="../assets/img/doctors/book-doc-02.jpg" alt="User Image">
+                                    </a>
+                                    <div class="profile-det-info">
+                                        <h3>Hoàng Văn Thợ</h3>
+                                        <div class="patient-details">
+                                            <h5><i class="fas fa-user"></i> Kỹ thuật viên</h5>
+                                            <h5 class="mb-0"><i class="fas fa-tools"></i> Điện tử, Điện lạnh
+                                            </h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="dashboard-widget">
+                                <nav class="dashboard-menu">
+                                    <ul>
+                                        <li>
+                                            <a href="./dashbroad_technician.html">
+                                                <i class="fas fa-columns"></i>
+                                                <span>Bảng điều khiển</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./profile_technician.html">
+                                                <i class="fas fa-user"></i>
+                                                <span>Hồ sơ</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./order_repair.html">
+                                                <i class="fas fa-toolbox"></i>
+                                                <span>Đơn đã sửa</span>
+                                            </a>
+                                        </li>
+                                        <li class="active">
+                                            <a href="./blog.html">
+                                                <i class="fab fa-blogger"></i>
+                                                <span>Bài viết</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./payment_technician.html">
+                                                <i class="far fa-money-bill-alt"></i>
+                                                <span>Thanh toán</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./chat_technician.html">
+                                                <i class="fas fa-comments"></i>
+                                                <span>Chat</span>
+                                                <small class="unread-msg">23</small>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./address.html">
+                                                <i class="fas fa-map-marked-alt"></i>
+                                                <span>Địa chỉ</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./order_user.html">
+                                                <i class="fas fa-cart-arrow-down"></i>
+                                                <span>Quản lí đơn hàng</span>
+                                                <small class="unread-msg">7</small>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./rating.html">
+                                                <i class="fas fa-star"></i>
+                                                <span>Đánh giá đơn hàng</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./setting_technician.html">
+                                                <i class="fas fa-user-cog"></i>
+                                                <span>Chỉnh sửa hồ sơ</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./change_password.html">
+                                                <i class="fas fa-lock"></i>
+                                                <span>Đổi mật khẩu</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./support.html">
+                                                <i class="fas fa-lock"></i>
+                                                <span>Trung tâm hỗ trợ</span>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="./login.html">
+                                                <i class="fas fa-sign-out-alt"></i>
+                                                <span>Đăng xuất</span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-lg-8 col-xl-9">
+
+                            <!-- Basic Information -->
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="doc-review review-listing custom-edit-service">
+                                        <!-- Edit Blog -->
+                                        <h3 class="pb-3">Thêm bài viết</h3>
+        
+                                        <form method="post" enctype="multipart/form-data" autocomplete="off"
+                                            id="update_service" action="doctor-blog.html">
+                                            <input type="hidden" name="csrf_token_name"
+                                                value="0146f123a4c7ae94253b39bca6bd5a5e">
+        
+                                            <div class="service-fields mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="mb-2">Tên bài viết <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="hidden" name="service_id" id="service_id"
+                                                                value="18">
+                                                            <input class="form-control" type="text"
+                                                                name="service_title" id="service_title"
+                                                                value="Doccure – Making your clinic painless visit?"
+                                                                required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="service-fields mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="mb-2">Danh mục chính <span
+                                                                    class="text-danger">*</span></label>
+                                                            <select class="form-select form-control" name="category"
+                                                                required>
+                                                                <option value="">-- Chọn danh mục --</option>
+                                                                <option value="1" selected>Sửa chữa nhà cửa</option>
+                                                                <option value="2">Điện - Điện tử</option>
+                                                                <option value="3">Nước - Vệ sinh</option>
+                                                                <option value="4">Điều hòa - Lò sưởi</option>
+                                                                <option value="5">Mộc - Nội thất</option>
+                                                                <option value="6">Sửa đồ gia dụng</option>
+                                                                <option value="7">Dọn dẹp vệ sinh</option>
+                                                                <option value="8">Sơn - Trát</option>
+                                                                <option value="9">Khóa - An ninh</option>
+                                                                <option value="10">Diệt côn trùng</option>
+                                                                <option value="11">Sửa điện tử</option>
+                                                                <option value="12">Chuyển nhà</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-lg-6">
+                                                        <div class="mb-3">
+                                                            <label class="mb-2">Danh mục phụ <span
+                                                                    class="text-danger">*</span></label>
+                                                            <select class="form-select form-control"
+                                                                name="subcategory" required>
+                                                                <option value="">-- Chọn danh mục phụ --</option>
+                                                                <option value="1">Sửa chữa tổng hợp</option>
+                                                                <option value="2">Lắp đặt điện</option>
+                                                                <option value="3">Sửa chập điện</option>
+                                                                <option value="4">Sửa đường ống nước</option>
+                                                                <option value="5">Thông tắc cống</option>
+                                                                <option value="6">Sửa điều hòa</option>
+                                                                <option value="7">Bảo dưỡng máy nóng lạnh</option>
+                                                                <option value="8">Sửa tủ bếp</option>
+                                                                <option value="9">Sửa tủ lạnh</option>
+                                                                <option value="10">Vệ sinh nhà cửa</option>
+                                                                <option value="11">Sơn nhà</option>
+                                                                <option value="12">Đổi khóa cửa</option>
+                                                                <option value="13">Diệt mối mọt</option>
+                                                                <option value="14">Sửa TV - Loa đài</option>
+                                                                <option value="15">Chuyển đồ đạc</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="service-fields mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="mb-2">Nội dung <span
+                                                                    class="text-danger">*</span></label>
+                                                            <textarea id="about" class="form-control service-desc"
+                                                                name="about">note.</textarea>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+        
+                                            <div class="service-fields mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="service-upload">
+                                                            <i class="fas fa-cloud-upload-alt"></i>
+                                                            <span>Tải ảnh lên*</span>
+                                                            <input type="file" name="images[]" id="images"
+                                                                multiple=""
+                                                                accept="image/jpeg, image/png, image/gif">
+        
+                                                        </div>
+                                                        <div id="uploadPreview">
+                                                            <ul class="upload-wrap">
+                                                                <li>
+                                                                    <div class=" upload-images">
+                                                                        <img alt="Blog Image"
+                                                                            src="../assets/img/blog/blog-05.jpg">
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class=" upload-images">
+                                                                        <img alt="Blog Image"
+                                                                            src="../assets/img/blog/blog-05.jpg">
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <div class=" upload-images">
+                                                                        <img alt="Blog Image"
+                                                                            src="../assets/img/blog/blog-05.jpg">
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="service-fields mb-3">
+                                                <div class="row">
+                                                    <div class="col-lg-12">
+                                                        <div class="mb-3">
+                                                            <label class="mb-2">Mã Video <span
+                                                                    class="text-danger">*</span></label>
+                                                            <input type="hidden" name="video_id" id="video_id"
+                                                                value="18">
+                                                            <input class="form-control" type="text" name="video_id1"
+                                                                id="video_id1" value="Rf34rhkWW1" required="">
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="submit-section">
+                                                <button class="btn btn-primary submit-btn" type="submit"
+                                                    name="form_submit" value="submit">Gửi</button>
+                                            </div>
+                                        </form>
+                                        <!-- /Edit Blog -->
+                
+                                    </div>
+                                   
+                                </div>
+                            </div>
+                            <!-- /Basic Information -->
+                        </div>
+                        
+                    </div>
+                </div>
+                <!-- End Profile -->
+
+            </div>
+            <!-- /Page Content -->
+
+            <!-- Footer -->
+            <footer class="footer footer-one">
+                <div class="footer-top aos" data-aos="fade-up">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="row container-item">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget footer-about">
+                                            <div class="footer-logo">
+                                                <a href="./home.html"><img src="/public/logo.png" alt="logo"></a>
+                                            </div>
+                                            <div class="footer-about-content">
+                                                <p>Dịch vụ sửa chữa tận nơi chuyên nghiệp - Nhanh chóng, uy tín, giá cả
+                                                    hợp
+                                                    lý, đảm bảo chất lượng với đội ngũ kỹ thuật viên giàu kinh nghiệm!
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="row container-item">
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="footer-widget footer-menu">
+                                                    <h2 class="footer-title">Đối với khách hàng</h2>
+                                                    <ul>
+                                                        <li><a href="./login.html">Đăng nhập</a></li>
+                                                        <li><a href="./register.html">Đăng kí</a></li>
+                                                        <li><a href="./book_orders.html">Đặt lịch sửa chữa</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-6 col-md-6">
+                                                <div class="footer-widget footer-menu">
+                                                    <h2 class="footer-title">Đối với KTV</h2>
+                                                    <ul>
+                                                        <li><a href="./login.html">Đăng nhập</a></li>
+                                                        <li><a href="./find_orders.html">Quản lý đơn hàng</a></li>
+                                                        <li><a href="./find_orders.html">Quản lý doanh thu</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget footer-contact">
+                                            <h2 class="footer-title">Liên hệ với chúng tôi</h2>
+                                            <div class="footer-contact-info">
+                                                <div class="footer-address">
+                                                    <p><i class="fas fa-map-marker-alt"></i>Trương Định, Hoàng Mai, Hà
+                                                        Nội</p>
+                                                </div>
+                                                <div class="footer-address">
+                                                    <p><i class="fas fa-phone"></i>+84 36 346 8723</p>
+                                                </div>
+                                                <div class="footer-address mb-0">
+                                                    <p><i class="fas fa-mail-bulk"></i>son.hv203559@sis.hust.edu.vn</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <div class="footer-widget">
+                                            <h2 class="footer-title">Nhận thông báo của chúng tôi</h2>
+                                            <div class="subscribe-form">
+                                                <form action="#">
+                                                    <input type="email" class="form-control"
+                                                        placeholder="Nhập địa chỉ email của bạn">
+                                                    <button type="submit" class="btn">Gửi</button>
+                                                </form>
+                                            </div>
+                                            <div class="social-icon">
+                                                <ul>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-facebook"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-instagram"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i class="fab fa-twitter"></i></a>
+                                                    </li>
+                                                    <li>
+                                                        <a href="javascript:void(0);"><i
+                                                                class="fab fa-linkedin-in"></i></a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3">
+                                <div class="footer-widget footer-scope">
+                                    <h2 class="footer-title">Phạm vi hoạt động</h2>
+                                    <div class="footer-scope-img">
+                                        <img class="img-fluid" src="/src/assets/img/banner/footer-img.png"
+                                            alt="Scope-image">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <div class="container">
+                        <!-- Copyright -->
+                        <div class="copyright">
+                            <div class="row ">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="copyright-text">
+                                        <p class="mb-0"> Bản quyền © 2025 <a
+                                                href="https://themeforest.net/user/dreamstechnologies/portfolio"
+                                                target="_blank">ET4900.</a> Mọi quyền được bảo lưu.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+
+                                    <!-- Copyright Menu -->
+                                    <div class="copyright-menu">
+                                        <ul class="policy-menu">
+                                            <li><a href="privacy-policy.html">Chính sách bảo mật</a></li>
+                                            <li><a href="terms-condition.html">Điều khoản và Dịch vụ</a></li>
+                                        </ul>
+                                    </div>
+                                    <!-- /Copyright Menu -->
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /Copyright -->
+                    </div>
+                </div>
+            </footer>
+            <!-- /Footer -->
+        </div>
+        <!-- /Main Wrapper -->
+
+
+    </div>
+
+    <script src="../assets/js/jquery-3.7.1.min.js"></script>
+
+    <!-- Bootstrap Core JS -->
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <!-- Feather Icon JS -->
+    <script src="../assets/js/feather.min.js"></script>
+    <!-- Datepicker JS -->
+    <script src="../assets/js/moment.min.js"></script>
+    <script src="../assets/js/bootstrap-datetimepicker.min.js"></script>
+    <!-- Owl Carousel JS -->
+    <script src="../assets/js/owl.carousel.min.js"></script>
+    <!-- Slick JS -->
+    <script src="../assets/js/slick.js"></script>
+    <!-- Animation JS -->
+    <script src="../assets/js/aos.js"></script>
+
+    <!-- Counter JS -->
+    <script src="../assets/js/counter.js"></script>
+
+    <!-- BacktoTop JS -->
+    <script src="../assets/js/backToTop.js"></script>
+
+    <!-- Custom JS -->
+    <script src="../assets/js/js/user.js"></script>
+
+</body>
+
+</html>
