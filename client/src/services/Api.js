@@ -2,7 +2,7 @@ import Http from "./Http";
 
 //Register
 export const registerUser = (formData) =>
-  Http.post("/User", formData, {
+  Http.post("/Auth/register", formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },

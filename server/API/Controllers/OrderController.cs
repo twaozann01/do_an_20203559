@@ -28,110 +28,172 @@ namespace API.Controllers
         {
             _unitOfWork = unitOfWork;
             _vatService = vatService;
-            _ratingService = ratingService; // ✅ gán đúng biến truyền vào
+            _ratingService = ratingService; 
         }
 
 
         [HttpGet]
-        public async Task<IActionResult> GetListAsync([FromQuery] OrderFilter filter)
+public async Task<IActionResult> GetListAsync([FromQuery] OrderFilter filter)
+{
+    var (orders, total) = await _unitOfWork.OrderRepository.GetPageByFilterAsync(filter);
+
+    if (total == 0)
+    {
+        return Ok(new
         {
-            var orders = await _unitOfWork.OrderRepository.GetPageByFilterAsync(filter);
-            return Ok(new PageData<OrderDto>
+            status = 200,
+            message = "Không có đơn hàng nào phù hợp với bộ lọc.",
+            data = new PageData<OrderDto>
             {
-                Items = orders.Item1.Adapt<List<OrderDto>>(),
-                Total = orders.Item2
-            });
+                Items = new List<OrderDto>(),
+                Total = 0
+            }
+        });
+    }
+
+    return Ok(new
+    {
+        status = 200,
+        message = "Lấy danh sách đơn hàng thành công.",
+        data = new PageData<OrderDto>
+        {
+            Items = orders.Adapt<List<OrderDto>>(),
+            Total = total
         }
+    });
+}
+
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetDetailAsync(Guid id)
+public async Task<IActionResult> GetDetailAsync(Guid id)
+{
+    var order = await _unitOfWork.OrderRepository.GetDetailAsync(id);
+
+    if (order == null)
+    {
+        return NotFound(new
         {
-            var order = await _unitOfWork.OrderRepository.GetDetailAsync(id);
-            if (order == null) return NotFound();
-            return Ok(order);
-        }
+            status = 404,
+            message = "Không tìm thấy đơn hàng."
+        });
+    }
+
+    return Ok(new
+    {
+        status = 200,
+        message = "Lấy chi tiết đơn hàng thành công.",
+        data = order
+    });
+}
+
 
 
         [HttpPost]
-        public async Task<IActionResult> CreateAsync([FromForm] CreateOrderRequest request)
+public async Task<IActionResult> CreateAsync([FromForm] CreateOrderRequest request)
+{
+    try
+    {
+        if (request.OrderDetails == null || !request.OrderDetails.Any())
         {
-            try
+            return BadRequest(new
             {
-                if (request.OrderDetails == null || !request.OrderDetails.Any())
-                    return BadRequest("Đơn hàng phải có ít nhất một chi tiết thiết bị.");
-
-                var now = TimeHelper.GetVietnamTime();
-
-
-                var order = request.Adapt<Order>();
-                order.Id = Guid.CreateVersion7();
-                order.CreatedAt = now;
-                order.RepairDate = request.RepairDate;
-                order.Status = OrderStatus.Pending.ToString();
-                order.ServiceDeviceId = request.ServiceDeviceId;
-                order.OrderDetails = new List<OrderDetail>();
-
-                // ✅ Sinh OrderCode
-                var countToday = await _unitOfWork.OrderRepository.CountByDateAsync(now.Date);
-                var orderCode = "ORD" + now.ToString("yyMMdd") + (countToday + 1).ToString("D6");
-                order.OrderCode = orderCode;
-
-                foreach (var detail in request.OrderDetails)
-                {
-                    if (detail.DeviceDetailId == null)
-                        return BadRequest("Thiếu DeviceDetailId.");
-
-                    var deviceDetail = await _unitOfWork.DeviceDetailRepository.GetByIdAsync(detail.DeviceDetailId.Value);
-                    if (deviceDetail == null)
-                        return BadRequest("DeviceDetail không tồn tại.");
-
-                    var orderDetail = new OrderDetail
-                    {
-                        Id = Guid.NewGuid(),
-                        OrderId = order.Id,
-                        DeviceDetailId = detail.DeviceDetailId.Value,
-                        Description = detail.Description,
-                        MinPrice = (int?)deviceDetail.MinPrice
-                    };
-
-                    // Xử lý ảnh
-                    if (detail.ImageFile != null && detail.ImageFile.Length > 0)
-                    {
-                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(detail.ImageFile.FileName)}";
-                        var path = Path.Combine("wwwroot", "uploads", "orders", "images", fileName);
-                        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-                        using var stream = new FileStream(path, FileMode.Create);
-                        await detail.ImageFile.CopyToAsync(stream);
-                        orderDetail.Image = $"/uploads/orders/images/{fileName}";
-                    }
-
-                    // Xử lý video
-                    if (detail.VideoFile != null && detail.VideoFile.Length > 0)
-                    {
-                        var fileName = $"{Guid.NewGuid()}{Path.GetExtension(detail.VideoFile.FileName)}";
-                        var path = Path.Combine("wwwroot", "uploads", "orders", "videos", fileName);
-                        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
-                        using var stream = new FileStream(path, FileMode.Create);
-                        await detail.VideoFile.CopyToAsync(stream);
-                        orderDetail.Video = $"/uploads/orders/videos/{fileName}";
-                    }
-
-                    order.OrderDetails.Add(orderDetail);
-                }
-
-                order.Total = order.OrderDetails.Sum(d => d.MinPrice ?? 0);
-
-                await _unitOfWork.OrderRepository.AddAsync(order);
-                await _unitOfWork.SaveChangesAsync();
-
-                return Created($"/api/Order/{order.Id}", new { order.Id, order.OrderCode });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("🔥 Lỗi khi tạo đơn hàng: " + ex.Message);
-                return StatusCode(500, "Lỗi server nội bộ: " + ex.Message);
-            }
+                status = 400,
+                message = "Thiếu thông tin bắt buộc: Đơn hàng phải có ít nhất một chi tiết thiết bị."
+            });
         }
+
+        if (request.RepairDate < TimeHelper.GetVietnamTime().Date)
+        {
+            return BadRequest(new
+            {
+                status = 400,
+                message = "Ngày sửa chữa không hợp lệ. Phải từ hôm nay trở đi."
+            });
+        }
+
+        var now = TimeHelper.GetVietnamTime();
+        var order = request.Adapt<Order>();
+        order.Id = Guid.CreateVersion7();
+        order.CreatedAt = now;
+        order.Status = OrderStatus.Pending.ToString();
+        order.OrderCode = "ORD" + now.ToString("yyMMdd") + (await _unitOfWork.OrderRepository.CountByDateAsync(now.Date) + 1).ToString("D6");
+        order.OrderDetails = new();
+
+        foreach (var detail in request.OrderDetails)
+        {
+            if (detail.DeviceDetailId == null)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "Thiếu thông tin bắt buộc: DeviceDetailId không được để trống."
+                });
+            }
+
+            var deviceDetail = await _unitOfWork.DeviceDetailRepository.GetByIdAsync(detail.DeviceDetailId.Value);
+            if (deviceDetail == null)
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "DeviceDetail không tồn tại."
+                });
+            }
+
+            var orderDetail = new OrderDetail
+            {
+                Id = Guid.NewGuid(),
+                OrderId = order.Id,
+                DeviceDetailId = detail.DeviceDetailId.Value,
+                Description = detail.Description,
+            };
+
+            if (detail.ImageFile != null && detail.ImageFile.Length > 0)
+            {
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(detail.ImageFile.FileName)}";
+                var path = Path.Combine("wwwroot", "uploads", "orders", "images", fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                using var stream = new FileStream(path, FileMode.Create);
+                await detail.ImageFile.CopyToAsync(stream);
+                orderDetail.Image = $"/uploads/orders/images/{fileName}";
+            }
+
+            if (detail.VideoFile != null && detail.VideoFile.Length > 0)
+            {
+                var fileName = $"{Guid.NewGuid()}{Path.GetExtension(detail.VideoFile.FileName)}";
+                var path = Path.Combine("wwwroot", "uploads", "orders", "videos", fileName);
+                Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+                using var stream = new FileStream(path, FileMode.Create);
+                await detail.VideoFile.CopyToAsync(stream);
+                orderDetail.Video = $"/uploads/orders/videos/{fileName}";
+            }
+
+            order.OrderDetails.Add(orderDetail);
+        }
+
+        order.Total = order.OrderDetails.Sum(d => d.MinPrice ?? 0);
+        await _unitOfWork.OrderRepository.AddAsync(order);
+        await _unitOfWork.SaveChangesAsync();
+
+        return StatusCode(201, new
+        {
+            status = 201,
+            message = "Tạo đơn hàng thành công.",
+            data = new { order.Id, order.OrderCode }
+        });
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine("🔥 Lỗi khi tạo đơn hàng: " + ex.Message);
+        return StatusCode(500, new
+        {
+            status = 500,
+            message = "Lỗi server nội bộ: " + ex.Message
+        });
+    }
+}
+
+
 
 
 

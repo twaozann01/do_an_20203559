@@ -11,7 +11,7 @@ using Shared.Utils;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-
+using Mapster;
 namespace API.Controllers
 {
     [Route("api/[controller]")]
@@ -39,20 +39,93 @@ namespace API.Controllers
         public async Task<IActionResult> LoginAsync([FromBody] AuthLoginRequest request)
         {
             var user = await _unitOfWork.UserRepository.GetByPhoneAsync(request.Phone!);
-            if (user == null || !PasswordHelper.VerifyPassword(request.Password!, user.Password))
+
+            if (user == null)
             {
-                return Unauthorized("Invalid username or password.");
+                return NotFound(new
+                {
+                    status = 404,
+                    message = "Số điện thoại chưa được đăng ký."
+                });
+            }
+
+            if (!PasswordHelper.VerifyPassword(request.Password!, user.Password))
+            {
+                return Unauthorized(new
+                {
+                    status = 401,
+                    message = "Mật khẩu không chính xác."
+                });
             }
 
             var accessToken = GenerateToken(user);
             var refreshToken = Guid.NewGuid().ToString("N");
             _memoryCache.Set($"RefreshToken_{user.Id}", refreshToken, TimeSpan.FromDays(7));
-            return Ok(new AuthLoginResponse
+
+            return Ok(new
             {
-                AccessToken = accessToken,
-                RefreshToken = refreshToken,
+                status = 200,
+                message = "Đăng nhập thành công.",
+                accessToken = accessToken,
+                refreshToken = refreshToken
             });
         }
+        [HttpPost("register")]
+        public async Task<IActionResult> CreateUserAsync([FromForm] CreateUserRequest request)
+        {
+            var existed = await _unitOfWork.UserRepository.GetByPhoneAsync(request.Phone!);
+            if (existed != null)
+            {
+                return Conflict(new
+                {
+                    status = 409,
+                    message = "Số điện thoại đã tồn tại"
+                });
+            }
+
+            var user = request.Adapt<User>();
+            user.Password = PasswordHelper.HashPassword(request.Password!);
+            user.CreatedAt = TimeHelper.GetVietnamTime();
+            Console.WriteLine("Thời gian tạo: " + user.CreatedAt);
+
+            if (request.AvatarFile != null)
+            {
+                string fileExtension = Path.GetExtension(request.AvatarFile.FileName);
+                string fileName = $"{Guid.NewGuid().ToString("N")}{fileExtension}";
+
+                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "avatars");
+
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string filePath = Path.Combine(uploadsFolder, fileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await request.AvatarFile.CopyToAsync(fileStream);
+                }
+
+                user.Avatar = $"/uploads/avatars/{fileName}";
+            }
+
+            await _unitOfWork.UserRepository.AddAsync(user, true);
+            await _unitOfWork.CartRepository.AddAsync(new Cart
+            {
+                UserId = user.Id,
+                Qty = 0
+            }, true);
+            return Ok(new
+            {
+                status = 200,
+                message = "Tạo tài khoản thành công",
+            });
+
+        }
+
+
+
         // [HttpPost("refresh-token")]
         // public async Task<IActionResult> RefreshTokenAsync([FromBody] AuthRefreshTokenRequest request)
         // {

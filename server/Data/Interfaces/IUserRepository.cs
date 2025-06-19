@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq.Expressions;
+
 
 namespace Data.Interfaces
 {
@@ -16,6 +18,8 @@ namespace Data.Interfaces
         public Task<User?> GetDetailAsync(Guid id);
         public Task<(int today, int thisWeek, int thisMonth)> GetNewUserCountAsync();
         Task<int> GetCountByRoleAsync(string role);
+        
+
 
     }
 }
