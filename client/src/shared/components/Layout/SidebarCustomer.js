@@ -13,19 +13,22 @@ const SidebarCustomer = () => {
   const [user, setUser] = useState([]);
   const [order, setOrder] = useState([]);
   const [mainAddress, setMainAddress] = useState(null);
+  const id = userInfo?.data.id
+  // console.log(id)
 
   useEffect(() => {
-    if (loading || !userInfo || !userInfo.id) return;
+    if (loading || !userInfo || !id) return;
     const fetchData = async () => {
       try {
         const [userRes, addressRes] = await Promise.all([
-          getInfo(userInfo?.id),
-          getAddress(userInfo?.id),
+          getInfo(id),
+          getAddress(id),
         ]);
 
-        setUser(userRes.data);
+        setUser(userRes.data.data);
+        // console.log("Hồ sơ",userRes.data.data)
 
-        const defaultAddress = addressRes.data.find((a) => a.addressMain);
+        const defaultAddress = addressRes.data.data.find((a) => a.addressMain);
         setMainAddress(defaultAddress);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu hồ sơ hoặc địa chỉ:", error);
@@ -40,12 +43,12 @@ const SidebarCustomer = () => {
     if (!userInfo) return;
     getOrders({
       params: {
-        customerId: userInfo?.id,
+        customerId: id,
       },
     })
-      .then((res) => setOrder(res.data.items))
+      .then((res) => setOrder(res.data.data.items))
       .catch((error) => console.log("Lỗi khi lấy đơn hàng", error));
-  }, [userInfo?.id]);
+  }, [id]);
 
   return (
     <div className="profile-sidebar">
@@ -53,7 +56,7 @@ const SidebarCustomer = () => {
         <div className="profile-info-widget">
           <a href="#" className="booking-doc-img">
             <img
-              src={user?.avatar === null ? avt : getImage(user?.avatar)}
+              src={!user?.avatar ? avt : getImage(user?.avatar)}
               alt="User Image"
             />
           </a>

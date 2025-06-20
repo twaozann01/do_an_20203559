@@ -33,10 +33,10 @@ const EditAddress = () => {
       try {
         const [provinceRes, addressRes] = await Promise.all([
           axios.get("https://provinces.open-api.vn/api/p/"),
-          getAddress(userInfo.id),
+          getAddress(userInfo?.data.id),
         ]);
 
-        const address = (addressRes.data || []).find((a) => a.id === id);
+        const address = (addressRes?.data.data || []).find((a) => a.id === id);
         if (!address) return navigate("/user/address");
 
         setProvinces(provinceRes.data);
@@ -145,7 +145,7 @@ const EditAddress = () => {
     if (!validateForm()) return;
     try {
       const payload = { ...formData };
-      await putAddress(userInfo.id, id, payload);
+      await putAddress(userInfo?.data.id, id, payload);
       setShowSuccessModal(true);
     } catch (err) {
       console.error("❌ Cập nhật địa chỉ thất bại", err);

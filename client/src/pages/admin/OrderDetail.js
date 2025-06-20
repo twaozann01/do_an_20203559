@@ -22,6 +22,7 @@ import { Modal } from "bootstrap";
 const OrderDetail = () => {
   const [vat, setVat] = useState(null);
   const { userInfo } = useContext(AuthContext);
+  // console.log(userInfo.data)
   const { id } = useParams();
 
   const [order, setOrder] = useState(null);
@@ -44,11 +45,11 @@ const OrderDetail = () => {
   useEffect(() => {
     getVATCurrent()
       .then((res) => {
-        console.log("Đây là phí dịch vụ", res.data);
-        setVat(res.data);
+        // console.log("Đây là phí dịch vụ", res.data.value);
+        setVat(res.data.value);
       })
       .catch((error) => console.log("Lỗi khi lấy phí dịch vụ: ", error));
-  });
+  }, []);
   const handleCloseModal = () => {
     if (modalRef.current) {
       modalRef.current.hide();
@@ -58,12 +59,11 @@ const OrderDetail = () => {
   const fetchData = async () => {
     try {
       const res = await getOrder(id);
-      const orderInfo = res.data;
-
+      const orderInfo = res.data.data;
 
       if (orderInfo.repairmanId) {
         const repairmanRes = await getInfo(orderInfo.repairmanId);
-        orderInfo.repairman = repairmanRes.data;
+        orderInfo.repairman = repairmanRes.data.data;
       }
 
       if (orderInfo.addressId) {
@@ -71,15 +71,16 @@ const OrderDetail = () => {
           orderInfo.customerId,
           orderInfo.addressId
         );
-        orderInfo.address = addressRes.data;
+        orderInfo.address = addressRes.data.data;
       }
 
       if (orderInfo.serviceDeviceId) {
         const device = await getDevice(orderInfo.serviceDeviceId);
-        orderInfo.device = device.data;
+        orderInfo.device = device.data.data;
       }
 
       setOrder(orderInfo);
+      // console.log(orderInfo);
     } catch (error) {
       console.log("Lỗi khi tải đơn hàng", error);
     }
@@ -261,27 +262,25 @@ const OrderDetail = () => {
           <div className="table-responsive w-100 pe-2">
             <table className="w-100">
               <tr>
-                <td className="text-end">
+                <td className="text-end pt-1">
                   <p>
                     <strong>Tổng tiền:</strong>
                   </p>
                 </td>
-                <td className="text-end">
+                <td className="text-end pt-1">
                   <p>{formatPrice(order?.total)}</p>
                 </td>
               </tr>
-              {userInfo?.id === order?.repairman?.id && (
                 <tr>
-                  <td className="text-end">
+                  <td className="text-end pt-1">
                     <p>
                       <strong>Cần thanh toán:</strong>
                     </p>
                   </td>
-                  <td className="text-end">
+                  <td className="text-end pt-1 text-danger">
                     <p>{formatPrice(order?.total * vat)}</p>
                   </td>
                 </tr>
-              )}
             </table>
           </div>
         </div>

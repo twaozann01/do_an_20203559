@@ -106,25 +106,6 @@ export const patchStatusWorking  = (userId) => Http.patch(`/User/${userId}/toggl
 export const putAcceptOrder = (OrderId, repairmanId) => Http.put(`/Order/${OrderId}/accept`, {repairmanId: repairmanId})
 
 
-
-
-// VAT
-export const postVAT = (vatValue) =>
-  Http.post("Vat", vatValue, {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-export const getVATCurrent = () => Http.get("/Vat/current")
-
-export const getWalletInfo = () =>
-  Http.get("/Wallet", {
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem("token")}`,
-    },
-  });
-
 // Dashboard
 export const getDashboard= () => Http.get("/Dashboard/statistics")
 export const getDashboardDailyOrders = () => Http.get("/Dashboard/daily-orders")
@@ -134,3 +115,12 @@ export const getDashboardOrderStatusRate = () => Http.get("/Dashboard/order-stat
 export const getDashboardTopRepairmen = () => Http.get("/Dashboard/top-repairmen") 
 export const getDashboardTopCustomers = () => Http.get("/Dashboard/top-customers") 
 export const getDashboardRecentOrders  = () => Http.get("/Dashboard/recent-orders") 
+export const postVAT = (vatValue) =>
+  Http.post("/Dashboard/vat", vatValue, {
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("token")}`,
+    },
+  });
+export const getVATCurrent = () => Http.get("/Dashboard/vatCurrent")
+

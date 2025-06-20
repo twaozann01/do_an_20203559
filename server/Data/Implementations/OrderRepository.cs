@@ -101,30 +101,30 @@ namespace Data.Implementations
             return (entities, total);
         }
 
-        public async Task<(long today, long thisWeek, long thisMonth)> GetRevenueAsync()
-        {
-            var todayStart = TimeHelper.GetVietnamTime().Date;
-            var thisWeekStart = TimeHelper.GetVietnamTime().Date.AddDays(-((7 + (int)TimeHelper.GetVietnamTime().Date.DayOfWeek - 1) % 7));
-            var thisMonthStart = new DateTime(TimeHelper.GetVietnamTime().Date.Year, TimeHelper.GetVietnamTime().Date.Month, 1);
+        public async Task<(decimal today, decimal thisWeek, decimal thisMonth)> GetRevenueAsync()
+{
+    var todayStart = TimeHelper.GetVietnamTime().Date;
+    var thisWeekStart = TimeHelper.GetVietnamTime().Date.AddDays(-((7 + (int)TimeHelper.GetVietnamTime().Date.DayOfWeek - 1) % 7));
+    var thisMonthStart = new DateTime(TimeHelper.GetVietnamTime().Date.Year, TimeHelper.GetVietnamTime().Date.Month, 1);
 
-            var todayEnd = todayStart.AddDays(1).AddTicks(-1);
-            var thisWeekEnd = thisWeekStart.AddDays(7).AddTicks(-1);
-            var thisMonthEnd = new DateTime(TimeHelper.GetVietnamTime().Date.Year, TimeHelper.GetVietnamTime().Date.Month, 1).AddMonths(1).AddTicks(-1);
+    var todayEnd = todayStart.AddDays(1).AddTicks(-1);
+    var thisWeekEnd = thisWeekStart.AddDays(7).AddTicks(-1);
+    var thisMonthEnd = thisMonthStart.AddMonths(1).AddTicks(-1);
 
-            var todayRevenue = await _context.Orders
-                .Where(o => o.CreatedAt >= todayStart && o.CreatedAt <= todayEnd)
-                .SumAsync(o => (long?)o.Total) ?? 0;
+    var todayRevenue = await _context.Orders
+        .Where(o => o.CreatedAt >= todayStart && o.CreatedAt <= todayEnd)
+        .SumAsync(o => o.Total ?? 0);
 
-            var thisWeekRevenue = await _context.Orders
-                .Where(o => o.CreatedAt >= thisWeekStart && o.CreatedAt <= thisWeekEnd)
-                .SumAsync(o => (long?)o.Total) ?? 0;
+    var thisWeekRevenue = await _context.Orders
+        .Where(o => o.CreatedAt >= thisWeekStart && o.CreatedAt <= thisWeekEnd)
+        .SumAsync(o => o.Total ?? 0);
 
-            var thisMonthRevenue = await _context.Orders
-                .Where(o => o.CreatedAt >= thisMonthStart && o.CreatedAt <= thisMonthEnd)
-                .SumAsync(o => (long?)o.Total) ?? 0;
+    var thisMonthRevenue = await _context.Orders
+        .Where(o => o.CreatedAt >= thisMonthStart && o.CreatedAt <= thisMonthEnd)
+        .SumAsync(o => o.Total ?? 0);
 
-            return (todayRevenue, thisWeekRevenue, thisMonthRevenue);
-        }
+    return (todayRevenue, thisWeekRevenue, thisMonthRevenue);
+}
 
         public async Task<int> CountByDateAsync(DateTime date)
         {

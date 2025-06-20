@@ -11,6 +11,7 @@ import {
   BarElement,
   Tooltip,
   Legend,
+  Filler
 } from "chart.js";
 import {
   getDashboard,
@@ -34,7 +35,8 @@ ChartJS.register(
   ArcElement,
   BarElement,
   Tooltip,
-  Legend
+  Legend,
+  Filler
 );
 
 const Dashboard = () => {
@@ -51,7 +53,7 @@ const Dashboard = () => {
     const fetchDashboard = async () => {
       try {
         const res = await getDashboard();
-        setStatistics(res.data);
+        setStatistics(res.data.data);
       } catch (error) {
         console.log("Lỗi khi tải thông tin", error);
       }
@@ -69,13 +71,13 @@ const Dashboard = () => {
           getDashboardRecentOrders(),
         ]);
 
-        setDailyOrders(ordersRes.data);
-        setDailyRevenue(revenueRes.data);
-        setServiceUsage(usageRes.data);
-        setOrderStatusRate(statusRes.data);
-        setTopRepairmen(repairmenRes.data);
-        setTopCustomers(customersRes.data);
-        setOrders(recentOrdersRes.data);
+        setDailyOrders(ordersRes.data.data);
+        setDailyRevenue(revenueRes.data.data);
+        setServiceUsage(usageRes.data.data);
+        setOrderStatusRate(statusRes.data.data);
+        setTopRepairmen(repairmenRes.data.data);
+        setTopCustomers(customersRes.data.data);
+        setOrders(recentOrdersRes.data.data);
       } catch (error) {
         console.log("Lỗi khi tải dữ liệu dashboard", error);
       }

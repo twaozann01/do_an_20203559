@@ -440,7 +440,7 @@ const Home = () => {
             <div className="row">
               <div className="col-lg-4 col-md-12 work-img-info">
                 <div className="work-img">
-                  <img src={banner_4} className="img-fluid" alt />
+                  <img src={banner_4} className="img-fluid" />
                 </div>
               </div>
               <div className="col-lg-8 col-md-12 work-details">
@@ -455,7 +455,7 @@ const Home = () => {
                     <div className="work-info">
                       <div className="work-icon">
                         <span>
-                          <img src={content_2} alt />
+                          <img src={content_2} />
                         </span>
                       </div>
                       <div className="work-content">
@@ -472,7 +472,7 @@ const Home = () => {
                     <div className="work-info">
                       <div className="work-icon">
                         <span>
-                          <img src={content_3} alt />
+                          <img src={content_3}  />
                         </span>
                       </div>
                       <div className="work-content">
@@ -489,7 +489,7 @@ const Home = () => {
                     <div className="work-info">
                       <div className="work-icon">
                         <span>
-                          <img src={content_1} alt />
+                          <img src={content_1} />
                         </span>
                       </div>
                       <div className="work-content">
@@ -507,7 +507,7 @@ const Home = () => {
                     <div className="work-info">
                       <div className="work-icon">
                         <span>
-                          <img src={content_4} alt />
+                          <img src={content_4}  />
                         </span>
                       </div>
                       <div className="work-content">
@@ -547,7 +547,6 @@ const Home = () => {
                           <img
                             src={repair}
                             className="img-fluid"
-                            alt
                           />
                         </div>
                       </a>
@@ -634,8 +633,7 @@ const Home = () => {
                         <div className="articles-img">
                           <img
                             src={repair_1}
-                            className="img-fluid"
-                            alt
+                            className="img-fluid"                            
                           />
                         </div>
                       </a>
@@ -720,7 +718,7 @@ const Home = () => {
                           <img
                             src={repair_2}
                             className="img-fluid"
-                            alt
+                            
                           />
                         </div>
                       </a>
@@ -805,7 +803,6 @@ const Home = () => {
                           <img
                             src={repair_3}
                             className="img-fluid"
-                            alt
                           />
                         </div>
                       </a>

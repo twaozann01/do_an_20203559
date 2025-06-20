@@ -76,7 +76,7 @@ namespace Shared.Models
         public string? FullName { get; set; }
         public DateTime? DateOfBirth { get; set; }
         public string? Gender { get; set; }
-        public IFormFile? AvatarFile { get; set; }
+        // public IFormFile? AvatarFile { get; set; }
         public string? Email { get; set; }
         public string? Phone { get; set; }
         public string? Password { get; set; }
@@ -90,10 +90,10 @@ namespace Shared.Models
         public IFormFile? AvatarFile { get; set; }
         public string? Email { get; set; }
         public string? Password { get; set; }
-        public int? Average { get; set; }
-        public int? ReviewCount { get; set; }
+        // public int? Average { get; set; }
+        // public int? ReviewCount { get; set; }
         public string? Bio { get; set; }
-        public string? WorkingStatus { get; set; }
+        // public string? WorkingStatus { get; set; }
     }
 
     public class ChangeUserStatusRequest

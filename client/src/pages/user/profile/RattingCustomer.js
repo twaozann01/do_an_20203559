@@ -14,7 +14,7 @@ import { ITEMS_PER_PAGE } from "../../../shared/constants/app";
 
 const RattingCustomer = () => {
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
   const [order, setOrder] = useState();
   const [searchCode, setSearchCode] = useState("");
 
@@ -28,7 +28,7 @@ const RattingCustomer = () => {
       },
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
         console.log(orders);
 
         const orderWithRating = orders.filter(
@@ -48,9 +48,9 @@ const RattingCustomer = () => {
 
               return {
                 ...order,
-                deviceName: device?.data?.name,
-                customerName: address?.data?.fullName,
-                customerAvatar: customer?.data?.avatar,
+                deviceName: device?.data.data?.name,
+                customerName: address?.data.data?.fullName,
+                customerAvatar: customer?.data.data?.avatar,
               };
             } catch (err) {
               console.error("❌ Lỗi khi xử lý đơn:", err);

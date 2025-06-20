@@ -81,7 +81,7 @@ const CreatedBlog = () => {
                             required
                           >
                             <option value>-- Chọn danh mục --</option>
-                            <option value={1} selected>
+                            <option value={1}>
                               Sửa chữa nhà cửa
                             </option>
                             <option value={2}>Điện - Điện tử</option>

@@ -35,8 +35,9 @@ const {userInfo, loading} = useContext(AuthContext)
     setErrors(formErrors);
     if (Object.keys(formErrors).length === 0) {
       try {
-        const res = await updatePassword(userInfo?.id, { oldPassword, newPassword });
-        if (res.status === 204) {
+        const res = await updatePassword(userInfo?.data.id, { oldPassword, newPassword });
+        // console.log(res)
+        if (res.data.status === 200) {
           alert("Đổi mật khẩu thành công!");
           setOldPassword('');
           setNewPassword('');

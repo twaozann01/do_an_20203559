@@ -34,20 +34,20 @@ const FormRegister = () => {
             limit: ITEMS_PER_PAGE,
           },
         });
-        const formList = res.data.items;
+        const formList = res.data.data.items;
         setForms(formList);
-         setTotalItems(res.data.totalItems || 50);
+         setTotalItems(res.data.data.totalItems || 50);
         const userMap = {};
         const addressMap = {};
 
         await Promise.all(
           formList.map(async (form) => {
             const resUser = await getInfo(form.userId);
-            userMap[form.userId] = resUser.data;
+            userMap[form.userId] = resUser.data.data;
 
             try {
               const resAddress = await getAddress(form.userId);
-              const main = resAddress.data.find((a) => a.addressMain === true);
+              const main = resAddress.data.data.find((a) => a.addressMain === true);
               if (main) {
                 addressMap[
                   form.userId

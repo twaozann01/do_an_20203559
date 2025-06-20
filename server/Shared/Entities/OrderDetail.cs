@@ -15,7 +15,7 @@ namespace Shared.Entities
         public string? Description { get; set; }
         public string? Video { get; set; }
         public string? Image { get; set; }
-        public int? MinPrice { get; set; }
+        public decimal? MinPrice { get; set; }
         public DateTime? CreatedAt { get; set; }
 
         public Order? Order { get; set; }

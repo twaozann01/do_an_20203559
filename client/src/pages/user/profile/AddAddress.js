@@ -63,7 +63,7 @@ const AddAddress = ({ onCancel }) => {
     e.preventDefault();
     if (!validateForm()) return;
     try {
-      await postAddress(userInfo.id, formData);
+      await postAddress(userInfo?.data.id, formData);
       setShowSuccessModal(true);
     } catch (err) {
       console.error(err);

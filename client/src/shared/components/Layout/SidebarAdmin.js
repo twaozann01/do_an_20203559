@@ -42,7 +42,7 @@ const SidebarAdmin = () => {
               </li>
 
               <li className={currentPath === '/admin/form-register' ? 'active' : ''}>
-                <Link to="/admin/form-register"><i className="fas fa-user-plus" /> <span>Đơn đăng ký</span> <span className="order-qty">(2)</span></Link>
+                <Link to="/admin/form-register"><i className="fas fa-user-plus" /> <span>Đơn đăng ký</span> </Link>
               </li>
 
               <li className={currentPath === '/admin/calender' ? 'active' : ''}>

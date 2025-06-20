@@ -15,7 +15,7 @@ namespace Shared.Models
         public string? Description { get; set; }
         public string? Video { get; set; }
         public string? Image { get; set; }
-        public int? MinPrice { get; set; }
+        public decimal? MinPrice { get; set; }
 
         public DeviceDetailDto? DeviceDetail { get; set; }
     }
@@ -26,6 +26,6 @@ namespace Shared.Models
         public string? Description { get; set; }
         public IFormFile? VideoFile { get; set; }
         public IFormFile? ImageFile { get; set; }
-        public int? MinPrice { get; set; }
+        public decimal? MinPrice { get; set; }
     }
 }

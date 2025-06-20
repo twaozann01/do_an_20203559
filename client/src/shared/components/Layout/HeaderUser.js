@@ -12,7 +12,7 @@ import { formatPrice } from "../../utils";
 
 const HeaderUser = () => {
   const { userInfo, logout } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
   const isLoggedIn = !!userInfo;
 
   const [user, setUser] = useState([]);
@@ -46,7 +46,8 @@ const HeaderUser = () => {
       if (id) {
         try {
           const res = await getInfo(id);
-          setUser(res.data);
+          console.log()
+          setUser(res.data.data);
         } catch (error) {
           console.error("Lỗi khi gọi getInfo:", error);
         }
@@ -279,7 +280,7 @@ const HeaderUser = () => {
                   <span className="user-img">
                     <img
                       className="rounded-circle"
-                      src={user?.avatar === null ? avt : getImage(user?.avatar)}
+                      src={!user?.avatar ? avt : getImage(user?.avatar)}
                       width={31}
                       alt={user?.fullName || "Avatar"}
                     />
@@ -294,7 +295,7 @@ const HeaderUser = () => {
                       <div className="avatar avatar-sm">
                         <img
                           src={
-                            user?.avatar === null ? avt : getImage(user?.avatar)
+                            !user?.avatar ? avt : getImage(user?.avatar)
                           }
                           alt={user?.fullName || "Avatar"}
                           className="avatar-img rounded-circle"

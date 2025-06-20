@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { getAddressUser, getDevice, getInfo, getOrders, patchOrderRate } from "../../services/Api";
+import {
+  getAddressUser,
+  getDevice,
+  getInfo,
+  getOrders,
+  patchOrderRate,
+} from "../../services/Api";
 import { ITEMS_PER_PAGE } from "../../shared/constants/app";
 import { getImage } from "../../shared/utils/getImage";
 import { formatDateTime } from "../../shared/utils";
@@ -33,7 +39,7 @@ const ReviewTable = () => {
       },
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
 
         const enrichedOrders = await Promise.all(
           orders.map(async (order) => {
@@ -45,15 +51,21 @@ const ReviewTable = () => {
               ? await getInfo(order.customerId)
               : null;
 
-            const address = order.addressId ? await getAddressUser( order.customerId, order.addressId ) : null
+            const address = order.addressId
+              ? await getAddressUser(order.customerId, order.addressId)
+              : null;
 
             return {
               ...order,
-              deviceName: device?.data?.name || "Không rõ",
-              repairmanName: repairman?.data?.fullName || "Chưa có thợ",
-              repairmanAvatar: getImage(repairman?.data?.avatar),
-              customerName: address?.data?.fullName || "Không rõ",
-              customerAvatar: getImage(customer?.data?.avatar),
+              deviceName: device?.data.data?.name || "Không rõ",
+              repairmanName: repairman?.data.data?.fullName || "Chưa có thợ",
+              repairmanAvatar: repairman?.data?.data?.avatar
+                ? getImage(repairman.data.data.avatar)
+                : "",
+              customerName: address?.data.data?.fullName || "Không rõ",
+              customerAvatar: customer?.data?.data?.avatar
+                ? getImage(customer?.data.data.avatar)
+                : "",
             };
           })
         );
@@ -76,27 +88,32 @@ const ReviewTable = () => {
   const totalPages = Math.ceil(filteredOrders.length / ITEMS_PER_PAGE);
 
   const handleDeleteRating = async (orderId) => {
-  if (!window.confirm("Bạn có chắc chắn muốn xóa đánh giá của đơn hàng này không?")) return;
-
-  try {
-    await patchOrderRate(orderId, {
-      ratingNumber: null,
-      ratingDescription: null,
-    });
-
-    // Cập nhật lại danh sách đơn hàng nếu cần
-    setOrders((prev) =>
-      prev.map((o) =>
-        o.id === orderId
-          ? { ...o, ratingNumber: null, ratingDescription: null }
-          : o
+    if (
+      !window.confirm(
+        "Bạn có chắc chắn muốn xóa đánh giá của đơn hàng này không?"
       )
-    );
-  } catch (err) {
-    console.error("Lỗi khi xóa đánh giá:", err);
-    alert("Không thể xóa đánh giá. Vui lòng thử lại.");
-  }
-};
+    )
+      return;
+
+    try {
+      await patchOrderRate(orderId, {
+        ratingNumber: null,
+        ratingDescription: null,
+      });
+
+      // Cập nhật lại danh sách đơn hàng nếu cần
+      setOrders((prev) =>
+        prev.map((o) =>
+          o.id === orderId
+            ? { ...o, ratingNumber: null, ratingDescription: null }
+            : o
+        )
+      );
+    } catch (err) {
+      console.error("Lỗi khi xóa đánh giá:", err);
+      alert("Không thể xóa đánh giá. Vui lòng thử lại.");
+    }
+  };
 
   return (
     <>
@@ -130,7 +147,12 @@ const ReviewTable = () => {
           <tbody>
             {paginatedOrders.map((order, idx) => (
               <tr key={idx}>
-                <td className="text-dark"> <Link to={`/admin/order-detail/${order?.id}`}>{order?.orderCode}</Link></td>
+                <td >
+                  {" "}
+                  <Link className="text-dark"to={`/admin/order-detail/${order?.id}`}>
+                    {order?.orderCode}
+                  </Link>
+                </td>
                 <td>{order?.deviceName}</td>
                 <td>
                   <div className="d-flex align-items-center">
@@ -157,7 +179,11 @@ const ReviewTable = () => {
                 <td>
                   <Ratting rating={order.ratingNumber} />
                 </td>
-                <td>{order.ratingDate ? formatDateTime(order.ratingDate) : "Không rõ"}</td>
+                <td>
+                  {order.ratingDate
+                    ? formatDateTime(order.ratingDate)
+                    : "Không rõ"}
+                </td>
                 <td>{order?.ratingDescription}</td>
                 <td>
                   <button
@@ -178,7 +204,9 @@ const ReviewTable = () => {
               {Array.from({ length: totalPages }, (_, i) => (
                 <li
                   key={i}
-                  className={`page-item ${currentPage === i + 1 ? "active" : ""}`}
+                  className={`page-item ${
+                    currentPage === i + 1 ? "active" : ""
+                  }`}
                 >
                   <button
                     className="page-link"

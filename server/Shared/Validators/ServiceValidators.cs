@@ -1,10 +1,5 @@
 ﻿using FluentValidation;
 using Shared.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Shared.Validators
 {
@@ -12,7 +7,9 @@ namespace Shared.Validators
     {
         public CreateServiceValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .WithMessage("Tên ngành không được để trống.");
         }
     }
 
@@ -20,7 +17,9 @@ namespace Shared.Validators
     {
         public UpdateServiceValidator()
         {
-            RuleFor(x => x.Name).NotEmpty().WithMessage("Name is required.");
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .WithMessage("Tên ngành không được để trống.");
         }
     }
 }

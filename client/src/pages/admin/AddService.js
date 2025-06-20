@@ -35,7 +35,7 @@ const AddService = () => {
     const fetchServices = async () => {
       try {
         const res = await getServices();
-        setServices(res.data.items || []);
+        setServices(res.data.data.items || []);
       } catch (err) {
         console.error("Lỗi tải ngành:", err);
       }
@@ -48,7 +48,7 @@ const AddService = () => {
       if ((activeTab === "device" || activeTab === "detail") && formValues.selectedServiceId) {
         try {
           const res = await getServiceDevices(formValues.selectedServiceId);
-          setDevices(res.data.items || []);
+          setDevices(res.data.data.items || []);
         } catch (err) {
           console.error("Lỗi tải thiết bị:", err);
         }
@@ -65,7 +65,7 @@ const AddService = () => {
             formValues.selectedServiceId,
             formValues.selectedDeviceId
           );
-          setDeviceDetails(res.data.items || []);
+          setDeviceDetails(res.data.data.items || []);
         } catch (err) {
           console.error("Lỗi tải chi tiết thiết bị:", err);
         }

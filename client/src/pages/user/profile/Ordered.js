@@ -7,7 +7,7 @@ import { AuthContext } from "../../../contexts/AuthContext";
 
 const Ordered = () => {
   const {userInfo, loading} = useContext(AuthContext)
-  const userRole = userInfo?.role;
+  const userRole = userInfo?.data.role;
 
   const [activeTab, setActiveTab] = useState("ordered");
  if(!userInfo || loading) return <div>Đang tải thông tin.....</div>

@@ -5,7 +5,7 @@ import { AuthContext } from '../../../contexts/AuthContext';
 
 const Ratting = () => {
   const {userInfo, loading} = useContext(AuthContext)
-  const userRole = userInfo?.role;
+  const userRole = userInfo?.data.role;
 
   const [activeTab, setActiveTab] = useState('your_order');
   if(!userInfo || loading) return <div>Đang tải thông tin</div>

@@ -10,7 +10,7 @@ import { formatDateTime, formatPrice } from '../../../shared/utils';
 
 const RepairedTab = () => {
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
 
   const [orders, setOrders] = useState([]);
   const [searchOrder, setSearchOrder] = useState("");
@@ -31,7 +31,7 @@ const RepairedTab = () => {
       }
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
 
         const orderName = await Promise.all(
           orders.map(async (order) => {
@@ -40,7 +40,7 @@ const RepairedTab = () => {
             
             return {
               ...order,
-              customerName: address?.data?.fullName,
+              customerName: address?.data?.data.fullName,
               statusLabel: getStatusLabel(order.status),
             };
           })

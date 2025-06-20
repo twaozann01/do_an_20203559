@@ -11,14 +11,14 @@ const FormRegistered = () => {
   useEffect(() => {
     const fetchForms = async () => {
       try {
-        const res = await getRepairmanFormUser(userInfo.id);
-        setForms(res.data);
+        const res = await getRepairmanFormUser(userInfo?.data.id);
+        setForms(res.data.data);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách đơn:", error);
       }
     };
 
-    if (userInfo?.id) {
+    if (userInfo?.data.id) {
       fetchForms();
     }
   }, [userInfo]);

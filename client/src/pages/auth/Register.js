@@ -73,7 +73,7 @@ const Register = () => {
           show: true,
           title: "Đăng ký không thành công",
           payload: {
-            message: "Đăng ký không thành công. Vui lòng thử lại sau.",
+            message: "Số điện thoại đã tồn tại",
             showActions: false,
           },
         });

@@ -36,7 +36,7 @@ const ListRepair = () => {
     try {
       setLoading(true);
       const res = await getCustomer();
-      const all = res.data || [];
+      const all = res.data.data || [];
       const onlyRepairmen = all.filter(
         (u) => u.role?.toLowerCase() === "repairman"
       );

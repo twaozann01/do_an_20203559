@@ -28,12 +28,13 @@ const FindOrders = () => {
   const [visibleCount, setVisibleCount] = useState(5);
 
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
 
   const fetchUserInfo = async () => {
     try {
       const user = await getInfo(id);
-      const userData = user.data;
+      const userData = user.data.data;
+      // console.log(userData);
       setUser(userData);
       setIsActive(userData?.workingStatus !== "Offline");
 
@@ -43,7 +44,7 @@ const FindOrders = () => {
 
       setAddressMain(mainAddress);
       // console.log("Địa chỉ chính của thợ: ", addressMain);
-      console.log("Thông tin của thợ: ", userData);
+      // console.log("Thông tin của thợ: ", userData);
     } catch (error) {
       console.log("Lỗi khi tải thông tin người dùng", error);
     }
@@ -56,7 +57,7 @@ const FindOrders = () => {
           status: "Pending",
         },
       });
-      const allOrders = res.data.items;
+      const allOrders = res.data.data.items;
       const orderInfo = await Promise.all(
         allOrders.map(async (order) => {
           const address = await getAddressUser(
@@ -65,15 +66,15 @@ const FindOrders = () => {
           );
 
           const device = await getDevice(order?.serviceDeviceId);
-          const deviceName = device?.data.name;
+          const deviceName = device?.data.data.name;
 
-          const addressCity = address?.data.city;
-          const addressDistrict = address?.data.district;
-          const addressWard = address?.data.ward;
-          const addressStreet = address?.data.street;
-          const phone = address?.data.phone
+          const addressCity = address?.data.data.city;
+          const addressDistrict = address?.data.data.district;
+          const addressWard = address?.data.data.ward;
+          const addressStreet = address?.data.data.street;
+          const phone = address?.data.data.phone;
 
-          const customerName = address?.data.fullName;
+          const customerName = address?.data.data.fullName;
           return {
             ...order,
             addressCity,
@@ -86,6 +87,7 @@ const FindOrders = () => {
           };
         })
       );
+      // console.log("Đơn hàng123", orderInfo);
       const rejectedOrders =
         JSON.parse(localStorage.getItem(`rejectedOrders_${id}`)) || [];
 
@@ -115,9 +117,9 @@ const FindOrders = () => {
       setOrders(matchedOrders);
       setVisibleCount(5);
 
-      console.log("Đơn hàng phù hợp", matchedOrders);
+      // console.log("Đơn hàng phù hợp", matchedOrders);
 
-      console.log("Tất cả các đơn hàng:", orderInfo);
+      // console.log("Tất cả các đơn hàng:", orderInfo);
     } catch (error) {
       console.log("Lỗi khi tải đơn hàng", error);
     }
@@ -185,20 +187,19 @@ const FindOrders = () => {
   };
 
   const handleAcceptOrder = async (order) => {
-  const confirm = window.confirm("Bạn có chắc chắn muốn nhận đơn này?");
-  if (!confirm) return;
+    const confirm = window.confirm("Bạn có chắc chắn muốn nhận đơn này?");
+    if (!confirm) return;
 
-  try {
-    await putAcceptOrder(order.id, userInfo.id); // API PUT/PATCH
-    setAcceptedOrder(order); // 🎉 Hiển thị modal đã nhận đơn
-    setOrders((prev) => prev.filter((o) => o.id !== order.id));
-    setSelectedOrder(null);
-  } catch (error) {
-    console.error("❌ Lỗi khi nhận đơn:", error);
-    alert("Không thể nhận đơn. Vui lòng thử lại.");
-  }
-};
-
+    try {
+      await putAcceptOrder(order.id, userInfo?.data.id); // API PUT/PATCH
+      setAcceptedOrder(order); // 🎉 Hiển thị modal đã nhận đơn
+      setOrders((prev) => prev.filter((o) => o.id !== order.id));
+      setSelectedOrder(null);
+    } catch (error) {
+      console.error("❌ Lỗi khi nhận đơn:", error);
+      alert("Không thể nhận đơn. Vui lòng thử lại.");
+    }
+  };
 
   if (loading || !userInfo) return <div>Đang tải thông tin...</div>;
   if (!user) return <div>Không tìm thấy thông tin người dùng</div>;
@@ -208,11 +209,11 @@ const FindOrders = () => {
       <div className="container">
         <div className="row g-4">
           {/* Cột thông tin thợ */}
-          <div className="col-lg-3">
+          <div className="col-lg-4">
             <div className="card shadow-sm mb-4 text-center">
               <div className="card-body">
                 <img
-                  src={getImage(user?.avatar)}
+                  src={user?.avatar ? getImage(user.avatar) : ""}
                   className="worker-avatar mb-3 rounded-circle border w-50 h-auto"
                   alt="Avatar"
                 />
@@ -310,8 +311,8 @@ const FindOrders = () => {
                         { value: "100to300", label: "100.000đ - 300.000đ" },
                         { value: "300to500", label: "300.000đ - 500.000đ" },
                         { value: "above500", label: "Trên 500.000đ" },
-                      ].map((item) => (
-                        <div className="form-check" key={item.value}>
+                      ].map((item, index) => (
+                        <div className="form-check" key={index}>
                           <input
                             className="form-check-input"
                             type="checkbox"
@@ -346,7 +347,7 @@ const FindOrders = () => {
           </div>
 
           {/* Cột danh sách đơn hàng */}
-          <div className="col-lg-9">
+          <div className="col-lg-8">
             {!isActive && (
               <div className="alert alert-warning text-center">
                 <i className="fas fa-power-off text-danger me-2"></i>
@@ -389,12 +390,11 @@ const FindOrders = () => {
         )}
 
         {acceptedOrder && (
-  <OrderAcceptedModal
-    order={acceptedOrder}
-    onClose={() => setAcceptedOrder(null)}
-  />
-)}
-
+          <OrderAcceptedModal
+            order={acceptedOrder}
+            onClose={() => setAcceptedOrder(null)}
+          />
+        )}
       </div>
     </section>
   );

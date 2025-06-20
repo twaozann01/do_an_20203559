@@ -23,11 +23,12 @@ const Payment = () => {
           getVATCurrent(),
         ]);
 
-        const vatValue = vatRes?.data || 0;
+        const vatValue = vatRes?.data.value || 0;
         setVat(vatValue);
+        // console.log(vat)
 
         const orderInfo = await Promise.all(
-          orderRes.data.items.map(async (item) => {
+          orderRes.data.data.items.map(async (item) => {
             const [repairmanRes, deviceRes] = await Promise.all([
               getInfo(item.repairmanId),
               getDevice(item.serviceDeviceId),
@@ -35,14 +36,15 @@ const Payment = () => {
 
             return {
               ...item,
-              repairmanName: repairmanRes?.data?.fullName,
-              deviceName: deviceRes?.data?.name,
+              repairmanName: repairmanRes?.data.data?.fullName,
+              deviceName: deviceRes?.data.data?.name,
               paid: item.paymentStatus === true,
             };
           })
         );
 
         setOrders(orderInfo);
+        // console.log(orderInfo)
       } catch (error) {
         console.error("Lỗi khi lấy đơn hàng hoặc VAT:", error);
       }
@@ -78,12 +80,17 @@ const Payment = () => {
     );
   };
 
-  const totalFilteredOrders = orders.filter((order) =>
-    order.orderCode?.toLowerCase().includes(searchTerm.toLowerCase())
-  ).filter((order) =>
-    activeTab === "unpaid" ? !order.paid :
-    activeTab === "paid" ? order.paid : true
-  );
+  const totalFilteredOrders = orders
+    .filter((order) =>
+      order.orderCode?.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .filter((order) =>
+      activeTab === "unpaid"
+        ? !order.paid
+        : activeTab === "paid"
+        ? order.paid
+        : true
+    );
 
   const totalPages = Math.ceil(totalFilteredOrders.length / ITEMS_PER_PAGE);
 
@@ -115,7 +122,9 @@ const Payment = () => {
                   {tab === "all"
                     ? "Tất cả"
                     : tab === "unpaid"
-                    ? `Chưa thanh toán (${orders.filter(o => !o.paid).length})`
+                    ? `Chưa thanh toán (${
+                        orders.filter((o) => !o.paid).length
+                      })`
                     : "Đã thanh toán"}
                 </button>
               </li>
@@ -159,7 +168,7 @@ const Payment = () => {
                       <td>{pay?.orderCode}</td>
                       <td>{pay?.repairmanName}</td>
                       <td>{pay?.deviceName}</td>
-                      <td>{formatPrice(pay?.total *  vat)}</td>
+                      <td>{formatPrice(pay?.total * vat)}</td>
                       <td className="text-danger">
                         {formatDateTime(pay?.paymentTerm)}
                       </td>

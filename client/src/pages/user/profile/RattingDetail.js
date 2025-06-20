@@ -20,19 +20,19 @@ const RattingDetail = () => {
     if (id) {
       getOrder(id)
         .then(async (res) => {
-          const order = res.data;
+          const order = res.data.data;
 
           const device = await getDevice(order.serviceDeviceId);
           let repairmanName = "Chưa có thợ";
 
           if (order.repairmanId) {
             const repairman = await getInfo(order.repairmanId);
-            repairmanName = repairman.data.fullName;
+            repairmanName = repairman.data.data.fullName;
           }
 
           const enrichedOrder = {
             ...order,
-            deviceName: device.data.name,
+            deviceName: device.data.data.name,
             repairmanName,
           };
 

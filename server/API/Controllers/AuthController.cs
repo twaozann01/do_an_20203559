@@ -88,27 +88,27 @@ namespace API.Controllers
             user.CreatedAt = TimeHelper.GetVietnamTime();
             Console.WriteLine("Thời gian tạo: " + user.CreatedAt);
 
-            if (request.AvatarFile != null)
-            {
-                string fileExtension = Path.GetExtension(request.AvatarFile.FileName);
-                string fileName = $"{Guid.NewGuid().ToString("N")}{fileExtension}";
+            // if (request.AvatarFile != null)
+            // {
+            //     string fileExtension = Path.GetExtension(request.AvatarFile.FileName);
+            //     string fileName = $"{Guid.NewGuid().ToString("N")}{fileExtension}";
 
-                string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "avatars");
+            //     string uploadsFolder = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "uploads", "avatars");
 
-                if (!Directory.Exists(uploadsFolder))
-                {
-                    Directory.CreateDirectory(uploadsFolder);
-                }
+            //     if (!Directory.Exists(uploadsFolder))
+            //     {
+            //         Directory.CreateDirectory(uploadsFolder);
+            //     }
 
-                string filePath = Path.Combine(uploadsFolder, fileName);
+            //     string filePath = Path.Combine(uploadsFolder, fileName);
 
-                using (var fileStream = new FileStream(filePath, FileMode.Create))
-                {
-                    await request.AvatarFile.CopyToAsync(fileStream);
-                }
+            //     using (var fileStream = new FileStream(filePath, FileMode.Create))
+            //     {
+            //         await request.AvatarFile.CopyToAsync(fileStream);
+            //     }
 
-                user.Avatar = $"/uploads/avatars/{fileName}";
-            }
+            //     user.Avatar = $"/uploads/avatars/{fileName}";
+            // }
 
             await _unitOfWork.UserRepository.AddAsync(user, true);
             await _unitOfWork.CartRepository.AddAsync(new Cart

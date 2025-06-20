@@ -25,17 +25,17 @@ const ListService = () => {
     const fetchAll = async () => {
       try {
         const servicesRes = await getServices();
-        const services = servicesRes.data.items;
+        const services = servicesRes.data.data.items;
 
         const servicePromises = services.map(async (service) => {
           const devicesRes = await getServiceDevices(service.id);
-          const devices = devicesRes.data.items;
+          const devices = devicesRes.data.data.items;
 
           const devicePromises = devices.map(async (device) => {
             const detailsRes = await getDeviceDetails(service.id, device.id);
             return {
               ...device,
-              details: detailsRes.data.items || [],
+              details: detailsRes.data.data.items || [],
             };
           });
 
@@ -139,14 +139,19 @@ const ListService = () => {
     });
   };
 
-  const flattenedDevices = servicesWithDevices.flatMap((service) =>
-    (service.devices || []).map((device) => ({
-      ...device,
-      serviceId: service.id,
-      serviceName: service.name,
-      serviceDescription: service.description,
-    }))
-  );
+  const filteredServices = selectedCategory
+  ? servicesWithDevices.filter((s) => s.id === selectedCategory)
+  : servicesWithDevices;
+
+const flattenedDevices = filteredServices.flatMap((service) =>
+  (service.devices || []).map((device) => ({
+    ...device,
+    serviceId: service.id,
+    serviceName: service.name,
+    serviceDescription: service.description,
+  }))
+);
+
 
   const totalPages = Math.ceil(flattenedDevices.length / ITEMS_PER_PAGE);
 

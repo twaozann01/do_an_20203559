@@ -16,7 +16,7 @@ import { CartContext } from "../../contexts/CartContext";
 const BookOrders = () => {
   const { userInfo, loading } = useContext(AuthContext);
   const { addToCart } = useContext(CartContext);
-  const userId = userInfo?.id;
+  const userId = userInfo?.data.id;
 
   const navigate = useNavigate();
   // Địa chỉ
@@ -43,8 +43,7 @@ const BookOrders = () => {
       description: "",
     },
   ]);
-   const [errors, setErrors] = useState({});
-
+  const [errors, setErrors] = useState({});
 
   const { id } = useParams();
   const editIndex = id !== undefined ? parseInt(id) : null;
@@ -60,7 +59,9 @@ const BookOrders = () => {
     if (!userId) return;
     getAddress(userId)
       .then((res) => {
-        const sorted = res.data.sort((a, b) => b.addressMain - a.addressMain);
+        const sorted = res.data.data.sort(
+          (a, b) => b.addressMain - a.addressMain
+        );
         setAddresses(sorted);
         setBookingAddress(sorted[0]);
       })
@@ -82,7 +83,7 @@ const BookOrders = () => {
 
   useEffect(() => {
     getServices()
-      .then((res) => setServices(res.data.items))
+      .then((res) => setServices(res.data.data.items))
       .catch((err) => console.error("Lỗi lấy ngành:", err));
   }, []);
 
@@ -90,23 +91,21 @@ const BookOrders = () => {
     if (!selectedServiceId) return;
     getServiceDevices(selectedServiceId)
       .then((res) => {
-        setDevices(res.data.items);
+        setDevices(res.data.data.items);
         setSelectedDeviceId("");
         setDetails([]);
       })
       .catch((err) => console.error("Lỗi lấy thiết bị:", err));
   }, [selectedServiceId]);
 
-
   useEffect(() => {
     if (!selectedServiceId || !selectedDeviceId) return;
     getDeviceDetails(selectedServiceId, selectedDeviceId)
       .then((res) => {
-        setDetails(res.data.items);
+        setDetails(res.data.data.items);
       })
       .catch((err) => console.error("Lỗi lấy chi tiết thiết bị:", err));
   }, [selectedServiceId, selectedDeviceId]);
-
 
   const handleDetailChange = (index, field, value) => {
     const updated = [...orderDetails];
@@ -120,7 +119,10 @@ const BookOrders = () => {
       return;
     }
 
-    setOrderDetails([...orderDetails, { deviceDetailId: "", imageFile: null, videoFile: null, description: "" }]);
+    setOrderDetails([
+      ...orderDetails,
+      { deviceDetailId: "", imageFile: null, videoFile: null, description: "" },
+    ]);
   };
 
   const handleRemoveDetailBlock = (index) => {
@@ -128,7 +130,7 @@ const BookOrders = () => {
     newDetails.splice(index, 1);
     setOrderDetails(newDetails);
   };
-const validateForm = () => {
+  const validateForm = () => {
     const newErrors = {};
     if (!bookingAddress?.id) newErrors.address = "Bạn chưa chọn địa chỉ.";
     if (!selectedServiceId) newErrors.service = "Bạn chưa chọn ngành dịch vụ.";
@@ -146,7 +148,7 @@ const validateForm = () => {
   };
   const handleSubmitOrder = async (e) => {
     e.preventDefault();
-if (!validateForm()) return;
+    if (!validateForm()) return;
 
     if (isSubmitting) return; // Ngăn gọi trùng
 
@@ -212,7 +214,7 @@ if (!validateForm()) return;
   const handleAddToCart = () => {
     if (!validateForm()) return;
 
-     const cartItem = {
+    const cartItem = {
       addressId: bookingAddress.id,
       address: `${bookingAddress.street}, ${bookingAddress.ward}, ${bookingAddress.district}, ${bookingAddress.city}`,
       fullName: bookingAddress.fullName,
@@ -240,8 +242,6 @@ if (!validateForm()) return;
     alert("✅ Đã thêm vào giỏ hàng!");
   };
 
-
-
   useEffect(() => {
     if (!isEditMode || !cartItems[editIndex]) return;
     const data = cartItems[editIndex];
@@ -255,7 +255,10 @@ if (!validateForm()) return;
 
         setSelectedDeviceId(data.serviceDeviceId);
 
-        const detailRes = await getDeviceDetails(data.serviceId, data.serviceDeviceId);
+        const detailRes = await getDeviceDetails(
+          data.serviceId,
+          data.serviceDeviceId
+        );
         setDetails(detailRes.data.items);
 
         setRepairDate(data.repairDate);
@@ -283,14 +286,11 @@ if (!validateForm()) return;
       }
     };
 
-  loadEditData();
-}, [isEditMode, cartItems, editIndex]);
-
-
+    loadEditData();
+  }, [isEditMode, cartItems, editIndex]);
 
   const handleSaveEdit = () => {
     if (!validateForm()) return;
-
 
     const updatedItem = {
       addressId: bookingAddress.id,
@@ -419,7 +419,9 @@ if (!validateForm()) return;
                       </option>
                     ))}
                   </select>
-                  {errors.service && <div className="text-danger small">{errors.service}</div>}
+                  {errors.service && (
+                    <div className="text-danger small">{errors.service}</div>
+                  )}
                 </div>
                 <div className="col-md-6">
                   <label className="form-label">Thiết bị</label>
@@ -436,7 +438,9 @@ if (!validateForm()) return;
                       </option>
                     ))}
                   </select>
-                  {errors.device && <div className="text-danger small">{errors.device}</div>}
+                  {errors.device && (
+                    <div className="text-danger small">{errors.device}</div>
+                  )}
                 </div>
               </div>
               {orderDetails.map((item, index) => (
@@ -474,9 +478,10 @@ if (!validateForm()) return;
                         ))}
                     </select>
                     {errors[`detail-${index}`] && (
-  <div className="text-danger small">{errors[`detail-${index}`]}</div>
-)}
-
+                      <div className="text-danger small">
+                        {errors[`detail-${index}`]}
+                      </div>
+                    )}
                   </div>
 
                   <div className="col-md-4 mt-2">
@@ -556,7 +561,9 @@ if (!validateForm()) return;
               value={repairDate}
               onChange={(e) => setRepairDate(e.target.value)}
             />
-            {errors.repairDate && <div className="text-danger small">{errors.repairDate}</div>}
+            {errors.repairDate && (
+              <div className="text-danger small">{errors.repairDate}</div>
+            )}
           </div>
           <div className="mb-3">
             <label className="form-label">Ghi chú thêm</label>

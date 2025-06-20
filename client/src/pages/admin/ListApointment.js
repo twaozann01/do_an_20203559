@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import {
-  getAddress,
   getAddressUser,
   getDevice,
   getInfo,
@@ -45,7 +44,7 @@ const AppointmentTable = () => {
   useEffect(() => {
     getOrders()
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
         // console.log(orders)
 
         const enrichedOrders = await Promise.all(
@@ -57,17 +56,20 @@ const AppointmentTable = () => {
             // const customer = order.customerId
             //   ? await getInfo(order.customerId)
             //   : null;
-            const address = order.addressId ? await getAddressUser(order?.customerId, order?.addressId) : null
+            const address = order.addressId
+              ? await getAddressUser(order?.customerId, order?.addressId)
+              : null;
             // console.log("Địa chỉ",address.data)
-
             return {
               ...order,
               rawStatus: order.status,
               statusLabel: convertStatus(order.status),
-              deviceName: device?.data?.name || "Không rõ",
-              repairmanName: repairman?.data?.fullName || "Chưa có thợ",
-              repairmanAvatar: getImage(repairman?.data?.avatar),
-              customerName: address?.data?.fullName || "Không rõ",
+              deviceName: device?.data.data?.name || "Không rõ",
+              repairmanName: repairman?.data.data?.fullName || "Chưa có thợ",
+              repairmanAvatar: repairman?.data?.data?.avatar
+                ? getImage(repairman.data.data.avatar)
+                : "",
+              customerName: address?.data.data?.fullName || "Không rõ",
               // customerAvatar: getImage(customer?.data?.avatar),
             };
           })
@@ -147,20 +149,19 @@ const AppointmentTable = () => {
 
       {/* Tìm kiếm */}
       <div className="row mb-3">
-  <div className="col-md-12 mb-2 mb-md-0">
-    <input
-      type="text"
-      className="form-control"
-      placeholder="Tìm kiếm theo mã đơn hàng..."
-      value={searchCode}
-      onChange={(e) => {
-        setSearchCode(e.target.value);
-        setCurrentPage(1);
-      }}
-    />
-  </div>
-</div>
-
+        <div className="col-md-12 mb-2 mb-md-0">
+          <input
+            type="text"
+            className="form-control"
+            placeholder="Tìm kiếm theo mã đơn hàng..."
+            value={searchCode}
+            onChange={(e) => {
+              setSearchCode(e.target.value);
+              setCurrentPage(1);
+            }}
+          />
+        </div>
+      </div>
 
       {/* Bảng đơn hàng */}
       <div className="table-responsive">
@@ -181,7 +182,7 @@ const AppointmentTable = () => {
             {paginatedOrders.length > 0 ? (
               paginatedOrders.map((app, index) => (
                 <tr key={index}>
-                  <td>{index+1}</td>
+                  <td>{index + 1}</td>
                   <td>
                     <button
                       className="btn btn-link text-dark p-0"

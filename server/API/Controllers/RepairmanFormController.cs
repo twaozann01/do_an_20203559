@@ -23,17 +23,23 @@ namespace API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetListAsync(
-            [FromQuery] int offset = 0,
-            [FromQuery] int limit = 10
-            )
+    [FromQuery] int offset = 0,
+    [FromQuery] int limit = 10)
         {
             var pageData = await _unitOfWork.RepairmanFormRepository.GetPageAsync(offset, limit);
-            return Ok(new PageData<RepairmanFormDto>
+
+            return Ok(new
             {
-                Items = pageData.Item1.Adapt<List<RepairmanFormDto>>(),
-                Total = pageData.Item2
+                status = 200,
+                message = "Lấy danh sách đơn đăng ký thành công.",
+                data = new PageData<RepairmanFormDto>
+                {
+                    Items = pageData.Item1.Adapt<List<RepairmanFormDto>>(),
+                    Total = pageData.Item2
+                }
             });
         }
+
 
         [HttpGet("{id}")]
         public async Task<IActionResult> GetDetailAsync([FromRoute] Guid id)
@@ -41,28 +47,42 @@ namespace API.Controllers
             var repairman = await _unitOfWork.RepairmanFormRepository.GetDetailAsync(id);
             if (repairman == null)
             {
-                return NotFound();
+                return NotFound(new
+                {
+                    status = 404,
+                    message = "Không tìm thấy đơn đăng ký kỹ thuật viên."
+                });
             }
-            return Ok(repairman);
+
+            return Ok(new
+            {
+                status = 200,
+                message = "Lấy thông tin đơn đăng ký thành công.",
+                data = repairman
+            });
         }
+
 
         [HttpPost]
         public async Task<IActionResult> CreateAsync([FromForm] CreateRepairmanFormRequest request)
         {
             if (request.UserId == null)
-                return BadRequest("Thiếu UserId");
-
+            {
+                return BadRequest(new
+                {
+                    status = 400,
+                    message = "Thiếu UserId"
+                });
+            }
 
             var repairmanForm = request.Adapt<Shared.Entities.RepairmanForm>();
-            repairmanForm.CreatedAt = TimeHelper.GetVietnamTime(); // nếu có field này
+            repairmanForm.CreatedAt = TimeHelper.GetVietnamTime();
 
             var repairmanFormDetail = request.Adapt<Shared.Entities.RepairmanFormDetail>();
-
             repairmanFormDetail.RepairmanFormId = repairmanForm.Id;
             repairmanFormDetail.CreatedAt = TimeHelper.GetVietnamTime();
 
-
-            // Lưu các file nếu có
+            // Lưu file nếu có
             repairmanFormDetail.Degree = await SaveFileAsync(request.DegreeFile, "degrees");
             repairmanForm.CccdFront = await SaveFileAsync(request.CccdFront, "cccd");
             repairmanForm.CccdBack = await SaveFileAsync(request.CccdBack, "cccd");
@@ -74,8 +94,20 @@ namespace API.Controllers
             await _unitOfWork.RepairmanFormDetailRepository.AddAsync(repairmanFormDetail);
             await _unitOfWork.SaveChangesAsync();
 
-            return Created();
+            return StatusCode(201, new
+            {
+                status = 201,
+                message = "Tạo đơn đăng ký kỹ thuật viên thành công.",
+                data = new
+                {
+                    repairmanForm.Id,
+                    repairmanForm.UserId,
+                    repairmanForm.City,
+                    repairmanForm.District
+                }
+            });
         }
+
 
         private async Task<string?> SaveFileAsync(IFormFile? file, string folderName)
         {
@@ -100,63 +132,85 @@ namespace API.Controllers
         {
             var forms = await _unitOfWork.RepairmanFormRepository.GetByUserIdAsync(userId);
             var result = forms.Select(x => x.Adapt<RepairmanFormDto>()).ToList();
-            return Ok(result);
-        }
 
-        [HttpPatch("{id}/status")]
-public async Task<IActionResult> UpdateStatusAsync([FromRoute] Guid id, [FromBody] UpdateRepairmanFormStatusRequest request)
-{
-    try
-    {
-        var repairmanForm = await _unitOfWork.RepairmanFormRepository.GetDetailAsync(id);
-        if (repairmanForm == null)
-        {
-            return NotFound();
-        }
-
-        repairmanForm.Status = request.Status;
-
-        if (request.Status == RepairmanFormStatus.Accepted.ToString())
-        {
-            var user = await _unitOfWork.UserRepository.GetByIdAsync(repairmanForm.UserId);
-            if (user == null)
+            return Ok(new
             {
-                return BadRequest("Không tìm thấy người dùng.");
-            }
-
-            user.Role = UserRole.Repairman.ToString();
-
-            if (repairmanForm.Detail == null)
-            {
-                return BadRequest("Chi tiết đơn không tồn tại.");
-            }
-
-            // Đảm bảo danh sách tồn tại
-            if (user.RepairmanInfos == null)
-            {
-                user.RepairmanInfos = new List<RepairmanProfile>();
-            }
-
-            // Thêm vào danh sách thông tin sửa chữa
-            user.RepairmanInfos.Add(new RepairmanProfile
-            {
-                ServiceDeviceId = repairmanForm.Detail.ServiceDeviceId,
-                DeviceName = repairmanForm.Detail.ServiceDevice?.Name ?? "",
-                YearsOfExperience = repairmanForm.Detail.YearsOfExperience ?? 0,
-                Description = repairmanForm.Detail.Description ?? "",
-                Degree = repairmanForm.Detail.Degree ?? ""
+                status = 200,
+                message = "Lấy danh sách đơn theo người dùng thành công.",
+                data = result
             });
         }
 
-        await _unitOfWork.SaveChangesAsync();
-        return NoContent();
-    }
-    catch (Exception ex)
-    {
-        Console.WriteLine($"[ERROR] Lỗi xử lý duyệt đơn: {ex.Message}");
-        return StatusCode(500, "Đã xảy ra lỗi khi duyệt đơn.");
-    }
-}
+
+        [HttpPatch("{id}/status")]
+        public async Task<IActionResult> UpdateStatusAsync([FromRoute] Guid id, [FromBody] UpdateRepairmanFormStatusRequest request)
+        {
+            try
+            {
+                var repairmanForm = await _unitOfWork.RepairmanFormRepository.GetDetailAsync(id);
+                if (repairmanForm == null)
+                {
+                    return NotFound(new
+                    {
+                        status = 404,
+                        message = "Không tìm thấy đơn đăng ký."
+                    });
+                }
+
+                repairmanForm.Status = request.Status;
+
+                if (request.Status == RepairmanFormStatus.Accepted.ToString())
+                {
+                    var user = await _unitOfWork.UserRepository.GetByIdAsync(repairmanForm.UserId);
+                    if (user == null)
+                    {
+                        return BadRequest(new
+                        {
+                            status = 400,
+                            message = "Không tìm thấy người dùng."
+                        });
+                    }
+
+                    if (repairmanForm.Detail == null)
+                    {
+                        return BadRequest(new
+                        {
+                            status = 400,
+                            message = "Chi tiết đơn không tồn tại."
+                        });
+                    }
+
+                    user.Role = UserRole.Repairman.ToString();
+                    user.RepairmanInfos ??= new List<RepairmanProfile>();
+
+                    user.RepairmanInfos.Add(new RepairmanProfile
+                    {
+                        ServiceDeviceId = repairmanForm.Detail.ServiceDeviceId,
+                        DeviceName = repairmanForm.Detail.ServiceDevice?.Name ?? "",
+                        YearsOfExperience = repairmanForm.Detail.YearsOfExperience ?? 0,
+                        Description = repairmanForm.Detail.Description ?? "",
+                        Degree = repairmanForm.Detail.Degree ?? ""
+                    });
+                }
+
+                await _unitOfWork.SaveChangesAsync();
+
+                return Ok(new
+                {
+                    status = 200,
+                    message = "Cập nhật trạng thái đơn đăng ký thành công."
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Lỗi xử lý duyệt đơn: {ex.Message}");
+                return StatusCode(500, new
+                {
+                    status = 500,
+                    message = "Đã xảy ra lỗi khi duyệt đơn."
+                });
+            }
+        }
 
 
 

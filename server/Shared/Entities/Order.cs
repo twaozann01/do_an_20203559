@@ -16,7 +16,7 @@ namespace Shared.Entities
         public Guid ServiceDeviceId { get; set; }
         public ServiceDevice? ServiceDevice { get; set; }
         public string? Status { get; set; }
-        public int? Total { get; set; }
+        public decimal? Total { get; set; }
         public bool? PaymentStatus { get; set; }
         public DateTime? PaymentTerm { get; set; }
         public DateTime? PaymentDate { get; set; }

@@ -23,7 +23,7 @@ const ListCustomer = () => {
     try {
       setLoading(true);
       const res = await getCustomer();
-      setCustomers(res.data || []);
+      setCustomers(res.data.data || []);
     } catch (err) {
       console.error("Lỗi lấy danh sách khách hàng", err);
     } finally {

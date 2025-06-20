@@ -467,7 +467,7 @@ const Service = () => {
                                 </li>
                                 <li>
                                     <p className="doc-location">
-                                  <i class="fas fa-wrench"></i> {" "}
+                                  <i className="fas fa-wrench"></i> {" "}
                                   Điện tử
                                 </p>
                                 </li>
@@ -527,7 +527,7 @@ const Service = () => {
                                 </li>
                                 <li>
                                     <p className="doc-location">
-                                  <i class="fas fa-wrench"></i> {" "}
+                                  <i className="fas fa-wrench"></i> {" "}
                                   Điện lạnh
                                 </p>
                                 </li>
@@ -587,7 +587,7 @@ const Service = () => {
                                 </li>
                                 <li>
                                     <p className="doc-location">
-                                  <i class="fas fa-wrench"></i> {" "}
+                                  <i className="fas fa-wrench"></i> {" "}
                                   Điện tử
                                 </p>
                                 </li>
@@ -647,7 +647,7 @@ const Service = () => {
                                 </li>
                                 <li>
                                     <p className="doc-location">
-                                  <i class="fas fa-wrench"></i> {" "}
+                                  <i className="fas fa-wrench"></i> {" "}
                                   Thời trang
                                 </p>
                                 </li>

@@ -164,9 +164,9 @@ const HeaderAdmin = () => {
               <span className="user-img">
                 <img
                   className="rounded-circle"
-                  src={userInfo?.avatar || avt}
+                  src={userInfo?.data.avatar || avt}
                   width={31}
-                  alt={userInfo?.fullName || "Avatar"}
+                  alt={userInfo?.data.fullName || "Avatar"}
                 />
               </span>
             </a>
@@ -178,14 +178,14 @@ const HeaderAdmin = () => {
                 <div className="user-header">
                   <div className="avatar avatar-sm">
                     <img
-                      src={userInfo?.avatar || avt}
+                      src={userInfo?.data.avatar || avt}
                       alt="User Image"
                       className="avatar-img rounded-circle"
                     />
                   </div>
                   <div className="user-text">
-                    <h6>{userInfo?.fullName}</h6>
-                    <p className="text-muted mb-0">{userInfo?.role === "Admin" ? "Quản trị viên" : ""}</p>
+                    <h6>{userInfo?.data.fullName}</h6>
+                    <p className="text-muted mb-0">{userInfo?.data.role === "Admin" ? "Quản trị viên" : ""}</p>
                   </div>
                 </div>
                 <Link className="dropdown-item text-black" to="/admin/profile">

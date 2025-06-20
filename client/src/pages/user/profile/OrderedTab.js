@@ -14,7 +14,7 @@ import { formatDateTime, formatPrice } from "../../../shared/utils";
 import { ITEMS_PER_PAGE } from "../../../shared/constants/app";
 const OrderedTab = () => {
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
 
   const [order, setOrder] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
@@ -30,7 +30,7 @@ const OrderedTab = () => {
       },
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
 
         const orderWithDevice = await Promise.all(
           orders.map(async (order) => {
@@ -40,19 +40,19 @@ const OrderedTab = () => {
 
             if (order.repairmanId) {
               const repairman = await getInfo(order.repairmanId);
-              repairmanName = repairman.data.fullName;
+              repairmanName = repairman.data.data.fullName;
             }
 
             return {
               ...order,
-              deviceName: device.data.name,
+              deviceName: device.data.data.name,
               repairmanName,
               statusLabel: getStatusLabel(order.status),
             };
           })
         );
         setOrder(orderWithDevice);
-        console.log(orderWithDevice);
+        // console.log(orderWithDevice);
       })
       .catch((error) => console.log("Lỗi khi tải đơn hàng!", error));
   }, [id, currentPage]);

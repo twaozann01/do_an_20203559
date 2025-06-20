@@ -13,11 +13,11 @@ const Address = () => {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
 
   useEffect(() => {
-    if (loading || !userInfo || !userInfo.id) return;
+    if (loading || !userInfo || !userInfo?.data.id) return;
     const fetchAddresses = async () => {
       try {
-        const res = await getAddress(userInfo.id);
-        const sorted = (res.data || []).sort((a, b) => b.addressMain - a.addressMain);
+        const res = await getAddress(userInfo?.data.id);
+        const sorted = (res.data.data || []).sort((a, b) => b.addressMain - a.addressMain);
         setAddresses(sorted);
       } catch (err) {
         console.error("Lỗi khi lấy địa chỉ:", err);
@@ -30,6 +30,7 @@ const Address = () => {
   }, [userInfo, loading]);
 
   const handleDelete = async () => {
+    // console.log(addresses)
     const addressToDelete = addresses.find(a => a.id === selectedAddressId);
     if (addressToDelete?.addressMain) {
       alert("❌ Không thể xoá địa chỉ chính. Vui lòng chọn địa chỉ khác làm mặc định trước.");
@@ -38,7 +39,7 @@ const Address = () => {
     }
 
     try {
-      await deleteAddress(userInfo.id, selectedAddressId);
+      await deleteAddress(userInfo?.data.id, selectedAddressId);
       alert("✅ Xoá địa chỉ thành công");
       setAddresses((prev) => prev.filter((a) => a.id !== selectedAddressId));
     } catch (err) {

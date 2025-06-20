@@ -61,8 +61,9 @@ const TechnicianRegisterForm = () => {
   );
 
   useEffect(() => {
-    if (!loading && userInfo?.id) {
-      setId(userInfo.id);
+    if (!loading && userInfo?.data.id) {
+      setId(userInfo?.data.id);
+      // console.log(id)
     }
   }, [loading, userInfo]);
 
@@ -71,7 +72,7 @@ const TechnicianRegisterForm = () => {
     const fetchUser = async () => {
       try {
         const res = await getInfo(id);
-        setUser(res.data);
+        setUser(res.data.data);
       } catch (error) {
         console.log("Lỗi láy thông tin người dùng", error);
       }
@@ -85,7 +86,7 @@ const TechnicianRegisterForm = () => {
       try {
         const res = await getAddress(id);
 
-        const main = res.data.find((item) => item.addressMain === true);
+        const main = res.data.data.find((item) => item.addressMain === true);
         if (main) {
           setMainAddress(main);
         }
@@ -100,7 +101,7 @@ const TechnicianRegisterForm = () => {
     const fetchServices = async () => {
       try {
         const res = await getServices();
-        setServices(res.data.items);
+        setServices(res.data.data.items);
       } catch (error) {
         console.error("Lỗi khi lấy danh sách ngành:", error);
       }
@@ -112,7 +113,7 @@ const TechnicianRegisterForm = () => {
   const availableDevices = useMemo(() => {
     if (!user?.repairmanInfos) return devices;
     const registeredIds = new Set(
-      user.repairmanInfos.map((r) => r.serviceDeviceId)
+      user.repairmanInfos?.map((r) => r.serviceDeviceId)
     );
     return devices.filter((d) => !registeredIds.has(d.id));
   }, [devices, user]);
@@ -122,7 +123,7 @@ const TechnicianRegisterForm = () => {
     const fetchDevices = async () => {
       try {
         const res = await getServiceDevices(selectedServiceId);
-        setDevices(res.data.items);
+        setDevices(res.data.data.items);
       } catch (error) {
         console.error("Lỗi khi lấy thiết bị:", error);
       }

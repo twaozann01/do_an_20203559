@@ -16,7 +16,7 @@ import RepairedTab from "./RepairedTab";
 const Dashboard = () => {
   const{userInfo, loading}  = useContext(AuthContext)
   const [activeTab, setActiveTab] = useState("ordered");
-  const userRole = userInfo?.role;
+  const userRole = userInfo?.data.role;
 
   if(!userInfo || loading )  return <div>Đang tải thông tin</div>
   return (

@@ -12,7 +12,7 @@ import {
   patchOrderCannel,
   patchOrderCompleted,
   patchOrderStart,
-  getVATCurrent
+  getVATCurrent,
 } from "../../../services/Api";
 import {
   formatDateTime,
@@ -23,7 +23,6 @@ import { AuthContext } from "../../../contexts/AuthContext";
 import { getImage } from "../../../shared/utils/getImage";
 import { Modal } from "bootstrap";
 const OrderDetail = () => {
-
   const { userInfo } = useContext(AuthContext);
   const { id } = useParams();
   const [vat, setVat] = useState(null);
@@ -35,13 +34,14 @@ const OrderDetail = () => {
   const modalRef = useRef(null);
 
   useEffect(() => {
-      getVATCurrent()
-        .then((res) => {
-          console.log("Đây là phí dịch vụ", res.data);
-          setVat(res.data);
-        })
-        .catch((error) => console.log("Lỗi khi lấy phí dịch vụ: ", error));
-    });
+    getVATCurrent()
+      .then((res) => {
+        // console.log("Đây là phí dịch vụ", res.data.data);
+        setVat(res.data.value);
+        // console.log(vat);
+      })
+      .catch((error) => console.log("Lỗi khi lấy phí dịch vụ: ", error));
+  }, []);
 
   const handleOpenModal = (url, isVideoFile) => {
     setMediaUrl(url);
@@ -65,16 +65,16 @@ const OrderDetail = () => {
   const fetchData = async () => {
     try {
       const res = await getOrder(id);
-      const orderInfo = res.data;
+      const orderInfo = res.data.data;
 
       if (orderInfo.customerId) {
         const customerRes = await getInfo(orderInfo.customerId);
-        orderInfo.customer = customerRes.data;
+        orderInfo.customer = customerRes.data.data;
       }
 
       if (orderInfo.repairmanId) {
         const repairmanRes = await getInfo(orderInfo.repairmanId);
-        orderInfo.repairman = repairmanRes.data;
+        orderInfo.repairman = repairmanRes.data.data;
       }
 
       if (orderInfo.addressId) {
@@ -82,12 +82,12 @@ const OrderDetail = () => {
           orderInfo.customerId,
           orderInfo.addressId
         );
-        orderInfo.address = addressRes.data;
+        orderInfo.address = addressRes.data.data;
       }
 
       if (orderInfo.serviceDeviceId) {
         const device = await getDevice(orderInfo.serviceDeviceId);
-        orderInfo.device = device.data;
+        orderInfo.device = device.data.data;
       }
 
       setOrder(orderInfo);
@@ -364,28 +364,30 @@ const OrderDetail = () => {
           </div>
           <div className="table-responsive w-100 pe-2">
             <table className="w-100">
-              <tr>
-                <td className="text-end">
-                  <p>
-                    <strong>Tổng tiền:</strong>
-                  </p>
-                </td>
-                <td className="text-end">
-                  <p>{formatPrice(order?.total)}</p>
-                </td>
-              </tr>
-              {userInfo?.id === order?.repairman?.id && (
+              <tbody>
                 <tr>
                   <td className="text-end">
                     <p>
-                      <strong>Cần thanh toán:</strong>
+                      <strong>Tổng tiền:</strong>
                     </p>
                   </td>
                   <td className="text-end">
-                    <p>{formatPrice(order?.total * vat)}</p>
+                    <p>{formatPrice(order?.total)}</p>
                   </td>
                 </tr>
-              )}
+                {userInfo?.data.id === order?.repairman?.id && (
+                  <tr>
+                    <td className="text-end">
+                      <p>
+                        <strong>Cần thanh toán:</strong>
+                      </p>
+                    </td>
+                    <td className="text-end">
+                      <p>{formatPrice(order?.total * vat)}</p>
+                    </td>
+                  </tr>
+                )}
+              </tbody>
             </table>
           </div>
         </div>
@@ -490,7 +492,7 @@ const OrderDetail = () => {
               </p>
             </div>
             <div>
-              {order?.customer?.id === userInfo?.id && (
+              {order?.customer?.id === userInfo?.data.id && (
                 <>
                   {order?.status === "Pending" && (
                     <button
@@ -511,7 +513,7 @@ const OrderDetail = () => {
                   )}
                 </>
               )}
-              {order?.repairman?.id === userInfo?.id && (
+              {order?.repairman?.id === userInfo?.data.id && (
                 <>
                   {order?.status === "InProgress" && !order?.inProgressAt && (
                     <button

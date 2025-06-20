@@ -13,16 +13,16 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (loading || !userInfo || !userInfo.id) return;
+      if (loading || !userInfo || !userInfo?.data.id) return;
       try {
         const [userRes, addressRes] = await Promise.all([
-          getInfo(userInfo.id),
-          getAddress(userInfo.id),
+          getInfo(userInfo?.data.id),
+          getAddress(userInfo?.data.id),
         ]);
 
-        setUser(userRes.data);
+        setUser(userRes.data.data);
 
-        const defaultAddress = addressRes.data.find((a) => a.addressMain);
+        const defaultAddress = addressRes.data.data.find((a) => a.addressMain);
         setMainAddress(defaultAddress);
       } catch (error) {
         console.error("Lỗi khi lấy dữ liệu hồ sơ hoặc địa chỉ:", error);

@@ -2,22 +2,26 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../../contexts/AuthContext";
-import { getDevice, getInfo, getOrders,getVATCurrent } from "../../../services/Api";
+import {
+  getDevice,
+  getInfo,
+  getOrders,
+  getVATCurrent,
+} from "../../../services/Api";
 import { formatDateTime, formatPrice } from "../../../shared/utils";
 import { Link, useNavigate } from "react-router-dom";
 
 const Payment = () => {
   const navigate = useNavigate();
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
   const [orders, setOrders] = useState([]);
   const [activeTab, setActiveTab] = useState("all");
-    const [vat, setVat] = useState(null);
-
+  const [vat, setVat] = useState(null);
 
   useEffect(() => {
     if (!id) return;
-    
+
     getOrders({
       params: {
         status: "Completed",
@@ -25,7 +29,7 @@ const Payment = () => {
       },
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
         const orderInfo = await Promise.all(
           orders.map(async (item) => {
             const customer = await getInfo(item.customerId);
@@ -33,25 +37,26 @@ const Payment = () => {
             const device = await getDevice(item.serviceDeviceId);
             return {
               ...item,
-              customerName: customer?.data?.fullName,
-              repairmanName: repairman?.data?.fullName,
-              deviceName: device?.data?.name,
+              customerName: customer?.data?.data?.fullName,
+              repairmanName: repairman?.data?.data?.fullName,
+              deviceName: device?.data?.data?.name,
               paid: item.paymentStatus === true,
             };
           })
         );
         setOrders(orderInfo);
+        console.log("Đơn hàng", orderInfo);
       })
       .catch((error) => console.log("Lỗi không tải được đơn hàng.", error));
   }, [id]);
   useEffect(() => {
     getVATCurrent()
       .then((res) => {
-        console.log("Đây là phí dịch vụ", res.data);
-        setVat(res.data);
+        // console.log("Đây là phí dịch vụ", res.data.value);
+        setVat(res.data.value);
       })
       .catch((error) => console.log("Lỗi khi lấy phí dịch vụ: ", error));
-  });
+  }, []);
 
   const unpaidOrders = orders.filter((order) => !order.paid);
   const paidOrders = orders.filter((order) => order.paid);
@@ -151,7 +156,9 @@ const Payment = () => {
                         <div className="table-action">
                           <button
                             className="btn btn-sm bg-info-light"
-                            onClick={() => navigate(`/user/payment-detail/${order.id}`)}
+                            onClick={() =>
+                              navigate(`/user/payment-detail/${order.id}`)
+                            }
                           >
                             <i className="far fa-eye" /> Xem
                           </button>

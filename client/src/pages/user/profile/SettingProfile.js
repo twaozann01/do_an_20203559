@@ -7,7 +7,7 @@ import { getImage } from "../../../shared/utils/getImage";
 import { AuthContext } from "../../../contexts/AuthContext";
 
 const SettingProfile = () => {
-    const {userInfo, loading} = useContext(AuthContext) 
+  const { userInfo, loading } = useContext(AuthContext);
   const [userData, setUserData] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -17,11 +17,11 @@ const SettingProfile = () => {
   });
 
   useEffect(() => {
-    if (loading || !userInfo || !userInfo.id) return;
+    if (loading || !userInfo || !userInfo?.data.id) return;
     const fetchUser = async () => {
       try {
-        const res = await getInfo(userInfo.id);
-        const data = res.data;
+        const res = await getInfo(userInfo?.data.id);
+        const data = res.data.data;
         if (data.dateOfBirth) {
           data.dateOfBirth = new Date(data.dateOfBirth)
             .toISOString()
@@ -37,7 +37,7 @@ const SettingProfile = () => {
       }
     };
     fetchUser();
-  }, [userInfo]);
+  }, [userInfo.data.id]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -62,7 +62,7 @@ const SettingProfile = () => {
 
   const handleCancel = async () => {
     try {
-      const res = await getInfo(userInfo.id);
+      const res = await getInfo(userInfo?.data.id);
       const data = res.data;
       if (data.dateOfBirth) {
         data.dateOfBirth = new Date(data.dateOfBirth)
@@ -92,13 +92,13 @@ const SettingProfile = () => {
     }
 
     try {
-      const res = await putInfo(userInfo.id, formData);
+      const res = await putInfo(userInfo.data.id, formData);
       if (res.status === 200 || res.status === 204) {
         setModalPayload({
           message: "Cập nhật thành công!",
           showActions: false,
         });
-        const newRes = await getInfo(userInfo.id);
+        const newRes = await getInfo(userInfo?.data.id);
         const data = newRes.data;
         if (data.dateOfBirth) {
           data.dateOfBirth = new Date(data.dateOfBirth)
@@ -138,7 +138,9 @@ const SettingProfile = () => {
                           ? URL.createObjectURL(selectedFile)
                           : userData.avatar
                           ? getImage(userData.avatar)
-                          : getImage("uploads/avatars/63a1b5dff69d422abece5d8f3c9f06c8.jpg")
+                          : getImage(
+                              "uploads/avatars/63a1b5dff69d422abece5d8f3c9f06c8.jpg"
+                            )
                       }
                       alt="User Avatar"
                       style={{

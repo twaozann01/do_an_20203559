@@ -16,7 +16,7 @@ namespace Shared.Models
         public Guid? RepairmanId { get; set; }
         public string? Status { get; set; }
         public DateTime? RepairDate { get; set; }
-        public int? Total { get; set; }
+        public decimal? Total { get; set; }
         public bool? PaymentStatus { get; set; }
         public DateTime? PaymentTerm { get; set; }
         public DateTime? PaymentDate { get; set; }
@@ -84,7 +84,7 @@ namespace Shared.Models
     public class DailyRevenueDto
     {
         public DateTime Date { get; set; }
-        public long Revenue { get; set; }
+        public decimal Revenue { get; set; }
     }
 
     public class StatusRateDto

@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import {
   getOrder,
-  postOrderPayment,
   getVATCurrent,
   patchUpdatePayment,
 } from "../../../services/Api";
@@ -24,8 +23,8 @@ const PaymentDetail = () => {
           getOrder(id),
           getVATCurrent(),
         ]);
-        setOrder(orderRes.data);
-        setVat(vatRes.data);
+        setOrder(orderRes.data.data);
+        setVat(vatRes.data.value);
       } catch (err) {
         alert("Lỗi khi tải dữ liệu.");
       } finally {

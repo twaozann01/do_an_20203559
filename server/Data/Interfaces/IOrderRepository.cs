@@ -16,7 +16,7 @@ namespace Data.Interfaces
     {
         Task<(List<Order>, int)> GetPageByFilterAsync(OrderFilter filter);
         Task<Order?> GetDetailAsync(Guid id);
-        Task<(long today, long thisWeek, long thisMonth)> GetRevenueAsync();
+        Task<(decimal today, decimal thisWeek, decimal thisMonth)> GetRevenueAsync();
         Task<(int today, int thisWeek, int thisMonth)> GetNewOrderCountAsync();
         Task<(int pending, int inProgress, int completed, int canceled)> GetOrderStatusCountAsync();
         Task<decimal> GetTotalRevenueAsync();

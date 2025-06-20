@@ -7,7 +7,7 @@ import { ITEMS_PER_PAGE } from "../../../shared/constants/app";
 
 const RattingOrder = () => {
   const { userInfo, loading } = useContext(AuthContext);
-  const id = userInfo?.id;
+  const id = userInfo?.data.id;
   const [orders, setOrders] = useState([]);
   const [searchCode, setSearchCode] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +35,7 @@ const RattingOrder = () => {
       },
     })
       .then(async (res) => {
-        const orders = res.data.items;
+        const orders = res.data.data.items;
         const orderWithDevice = await Promise.all(
           orders.map(async (order) => {
             const device = await getDevice(order.serviceDeviceId);
@@ -43,12 +43,12 @@ const RattingOrder = () => {
 
             if (order.repairmanId) {
               const repairman = await getInfo(order.repairmanId);
-              repairmanName = repairman.data.fullName;
+              repairmanName = repairman.data.data.fullName;
             }
 
             return {
               ...order,
-              deviceName: device.data.name,
+              deviceName: device.data.data.name,
               repairmanName,
               rateStatus: getRatingStatus(order),
             };

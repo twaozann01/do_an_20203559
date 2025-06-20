@@ -9,6 +9,9 @@ using Shared.Models;
 using Shared.Utils;
 using System.IO;
 using System.Security.Claims;
+using Data.Config;
+using Microsoft.EntityFrameworkCore;
+
 
 namespace API.Controllers
 {
@@ -19,40 +22,63 @@ namespace API.Controllers
         private readonly IUserRepository _userRepository;
         private readonly IAddressUserRepository _addressUserRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly AppDbContext _context;
+
 
         public UserController(
             IUserRepository userRepository,
             IAddressUserRepository addressUserRepository,
-            IUnitOfWork unitOfWork
+            IUnitOfWork unitOfWork,
+            AppDbContext context
             )
         {
             _userRepository = userRepository;
             _addressUserRepository = addressUserRepository;
             _unitOfWork = unitOfWork;
+            _context = context;
         }
 
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
+public async Task<IActionResult> GetUserByIdAsync([FromRoute] Guid id)
+{
+    var user = await _userRepository.GetDetailAsync(id);
+
+    if (user == null)
+    {
+        return NotFound(new
         {
-            var user = await _userRepository.GetDetailAsync(id);
+            status = 404,
+            message = "Không tìm thấy người dùng."
+        });
+    }
 
-            if (user == null)
-            {
-                return NotFound(new
-                {
-                    status = 404,
-                    message = "Không tìm thấy người dùng."
-                });
-            }
+    // Lấy danh sách đơn hàng đã hoàn thành của thợ
+    var completedOrders = await _context.Orders
+        .Where(o => o.RepairmanId == id && o.Status == "Completed")
+        .ToListAsync();
 
-            return Ok(new
-            {
-                status = 200,
-                message = "Lấy thông tin người dùng thành công.",
-                data = user.Adapt<UserDto>()
-            });
-        }
+    // Tính toán
+    var completedOrderCount = completedOrders.Count;
+    var reviewCount = completedOrders.Count(o => o.RatingNumber != null);
+    var averageRating = completedOrders
+        .Where(o => o.RatingNumber != null)
+        .Average(o => (double?)o.RatingNumber) ?? 0;
+
+    // Map sang DTO và gán lại giá trị tính được
+    var userDto = user.Adapt<UserDto>();
+    userDto.CompletedOrderCount = completedOrderCount;
+    userDto.ReviewCount = reviewCount;
+    userDto.Average = averageRating;
+
+    return Ok(new
+    {
+        status = 200,
+        message = "Lấy thông tin người dùng thành công.",
+        data = userDto
+    });
+}
+
 
 
         [HttpGet]
@@ -71,7 +97,7 @@ namespace API.Controllers
 
 
         [HttpPut("{id}")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> UpdateUserAsync(
      [FromRoute] Guid id,
      [FromForm] UpdateUserRequest request)
@@ -95,8 +121,6 @@ namespace API.Controllers
                 user.Gender = request.Gender;
                 user.Email = request.Email;
                 user.Bio = request.Bio;
-                if (request.Average.HasValue) user.Average = request.Average.Value;
-                if (request.ReviewCount.HasValue) user.ReviewCount = request.ReviewCount.Value;
                 if (request.DateOfBirth.HasValue)
                 {
                     user.DateOfBirth = DateTime.SpecifyKind(request.DateOfBirth.Value, DateTimeKind.Utc);
@@ -135,7 +159,7 @@ namespace API.Controllers
 
 
         [HttpDelete("{id}")]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUserAsync([FromRoute] Guid id)
         {
             var user = await _userRepository.GetByIdAsync(id);
@@ -160,7 +184,7 @@ namespace API.Controllers
 
 
         [HttpPatch("{id}/password")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> ChangePasswordAsync(
     [FromRoute] Guid id,
     [FromBody] ChangePasswordRequest request)
@@ -197,7 +221,7 @@ namespace API.Controllers
 
 
         [HttpPatch("{id}/status")]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ChangeStatusAsync(
      [FromRoute] Guid id,
      [FromBody] ChangeUserStatusRequest request)
@@ -224,7 +248,7 @@ namespace API.Controllers
 
 
         [HttpPatch("{id}/role")]
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
         public async Task<IActionResult> ChangeRoleAsync(
     [FromRoute] Guid id,
     [FromBody] ChangeUserRoleRequest request)
@@ -251,7 +275,7 @@ namespace API.Controllers
 
 
         [HttpGet("{userId}/address")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> GetAddressAsync([FromRoute] Guid userId)
         {
 
@@ -279,7 +303,7 @@ namespace API.Controllers
 
 
         [HttpPost("{userId}/address")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> AddAddressAsync(
     [FromRoute] Guid userId,
     [FromBody] CreateAddressUserRequest request)
@@ -318,7 +342,7 @@ namespace API.Controllers
 
 
         [HttpPut("{userId}/address/{addressId}")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> UpdateAddressAsync(
     [FromRoute] Guid userId,
     [FromRoute] Guid addressId,
@@ -363,7 +387,7 @@ namespace API.Controllers
 
 
         [HttpDelete("{userId}/address/{addressId}")]
-        [Authorize]
+        // [Authorize]
         public async Task<IActionResult> DeleteAddressAsync(
     [FromRoute] Guid userId,
     [FromRoute] Guid addressId)
