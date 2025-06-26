@@ -135,21 +135,24 @@ const ReviewTable = () => {
           <thead>
             <tr>
               <th>Mã đơn hàng</th>
-              <th>Dịch vụ</th>
-              <th>KTV</th>
+              <th>Thiết bị</th>
+              <th>Thợ sửa chữa</th>
               <th>Khách hàng</th>
               <th>Đánh giá</th>
-              <th>Nội dung</th>
               <th>Ngày đánh giá</th>
+              <th>Nội dung</th>
               <th>Hành động</th>
             </tr>
           </thead>
           <tbody>
             {paginatedOrders.map((order, idx) => (
               <tr key={idx}>
-                <td >
+                <td>
                   {" "}
-                  <Link className="text-dark"to={`/admin/order-detail/${order?.id}`}>
+                  <Link
+                    className="text-dark"
+                    to={`/admin/order-detail/${order?.id}`}
+                  >
                     {order?.orderCode}
                   </Link>
                 </td>
@@ -184,7 +187,7 @@ const ReviewTable = () => {
                     ? formatDateTime(order.ratingDate)
                     : "Không rõ"}
                 </td>
-                <td>{order?.ratingDescription}</td>
+                <td>{order?.ratingDescription ? order?.ratingDescription : "(Trống)" }</td>
                 <td>
                   <button
                     className="btn btn-sm btn-danger"

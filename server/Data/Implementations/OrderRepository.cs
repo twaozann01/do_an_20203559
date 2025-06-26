@@ -263,20 +263,21 @@ namespace Data.Implementations
         public async Task<List<TopRepairmanDto>> GetTopRepairmenAsync(int top)
 {
     var raw = await _context.Orders
-        .Where(o => 
-            o.Status == OrderStatus.Completed.ToString() && // chỉ lấy đơn đã hoàn thành
+    .Where(o => 
+        o.Status == OrderStatus.Completed.ToString() &&
+        o.RepairmanId != null &&
+        o.RatingNumber != null // thêm dòng này để tránh null
+    )
+    .GroupBy(o => new { o.RepairmanId, o.Repairman!.FullName })
+    .Select(g => new
+    {
+        RepairmanId = g.Key.RepairmanId!.Value,
+        Name = g.Key.FullName!,
+        Average = g.Average(x => x.RatingNumber!.Value), // giờ đã an toàn
+        TotalRatedOrders = g.Count()
+    })
+    .ToListAsync();
 
-            o.RepairmanId != null                // có thợ
-        )
-        .GroupBy(o => new { o.RepairmanId, o.Repairman!.FullName })
-        .Select(g => new
-        {
-            RepairmanId = g.Key.RepairmanId!.Value,
-            Name = g.Key.FullName!,
-            Average = g.Average(x => x.RatingNumber!.Value),
-            TotalRatedOrders = g.Count() // chỉ đếm đơn hoàn thành & có đánh giá
-        })
-        .ToListAsync();
 
     var result = raw
         .Select(r => new TopRepairmanDto

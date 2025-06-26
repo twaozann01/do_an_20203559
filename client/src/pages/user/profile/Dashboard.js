@@ -94,7 +94,7 @@ const Dashboard = () => {
                     }`}
                     onClick={() => setActiveTab("submit_technician")}
                   >
-                    Đơn đăng kí Kỹ thuật viên
+                    Đơn đăng kí thợ
                   </button>
                 </li>
 

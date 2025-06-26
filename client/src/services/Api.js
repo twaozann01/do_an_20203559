@@ -58,7 +58,7 @@ export const deleteCustomer  = (userId, config) => Http.delete(`/User/${userId}`
 
 export const updatePassword = (userId, config) => Http.patch(`/User/${userId}/password`, config)
 export const updateStatus = (userId, config) => Http.patch(`/User/${userId}/status`, config)
-export const updateRole = (userId, config) => Http.patch(`/User/${userId}/role`, config)
+// export const updateRole = (userId, config) => Http.patch(`/User/${userId}/role`, config)
 
 // Address
 export const postAddress = (userId, config) => Http.post(`/User/${userId}/address`, config)

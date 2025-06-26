@@ -7,7 +7,6 @@ import {
   getService,
   updateRepairmanForm,
   getAddress,
-  updateRole,
 } from "../../services/Api";
 import { formatDate } from "../../shared/utils";
 import { getImage } from "../../shared/utils/getImage";
@@ -36,7 +35,7 @@ const FormRegister = () => {
         });
         const formList = res.data.data.items;
         setForms(formList);
-         setTotalItems(res.data.data.totalItems || 50);
+        setTotalItems(res.data.data.totalItems || 50);
         const userMap = {};
         const addressMap = {};
 
@@ -47,7 +46,9 @@ const FormRegister = () => {
 
             try {
               const resAddress = await getAddress(form.userId);
-              const main = resAddress.data.data.find((a) => a.addressMain === true);
+              const main = resAddress.data.data.find(
+                (a) => a.addressMain === true
+              );
               if (main) {
                 addressMap[
                   form.userId
@@ -138,7 +139,7 @@ const FormRegister = () => {
   const filteredForms = forms.filter((form) =>
     filterStatus === "All" ? true : form.status === filterStatus
   );
-const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
   return (
     <div>
       <div className="">
@@ -219,27 +220,29 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
         </table>
       </div>
       {totalPages > 1 && (
-  <nav className="mt-3">
-    <ul className="pagination justify-content-center">
-      {[...Array(totalPages)].map((_, i) => {
-        const page = i + 1;
-        return (
-          <li
-            key={page}
-            className={`page-item ${currentPage === page ? "active" : ""}`}
-          >
-            <button
-              className="page-link"
-              onClick={() => setCurrentPage(page)}
-            >
-              {page}
-            </button>
-          </li>
-        );
-      })}
-    </ul>
-  </nav>
-)}
+        <nav className="mt-3">
+          <ul className="pagination justify-content-center">
+            {[...Array(totalPages)].map((_, i) => {
+              const page = i + 1;
+              return (
+                <li
+                  key={page}
+                  className={`page-item ${
+                    currentPage === page ? "active" : ""
+                  }`}
+                >
+                  <button
+                    className="page-link"
+                    onClick={() => setCurrentPage(page)}
+                  >
+                    {page}
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+      )}
 
       {showModal && selectedForm && (
         <div
@@ -265,12 +268,17 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
                   {/* Avatar */}
                   <div className="col-md-12 text-center">
                     <img
-                      src={getImage(userInfoMap[selectedForm.userId]?.avatar)}
+                      src={
+                        userInfoMap[selectedForm.userId]?.avatar
+                          ? getImage(userInfoMap[selectedForm.userId].avatar)
+                          : "Không có" // Đường dẫn đến ảnh mặc định
+                      }
                       alt="avatar"
                       className="rounded-circle mb-3"
                       width="120"
                       height="120"
                     />
+
                     <h5>
                       {userInfoMap[selectedForm.userId]?.fullName ||
                         "Đang tải..."}
@@ -361,16 +369,23 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
 
                   <div className="col-md-12">
                     <label className="form-label">Mô tả</label>
-                    <textarea className="form-control" rows="2" readOnly>
-                      {selectedForm.detail?.description || ""}
-                    </textarea>
+                    <textarea
+                      className="form-control"
+                      rows="2"
+                      readOnly
+                      value={selectedForm.detail?.description || ""}
+                    />
                   </div>
 
                   {/* Hình ảnh */}
                   <div className="col-md-12">
                     <label className="form-label">CCCD Mặt trước</label>
                     <img
-                      src={getImage(selectedForm.cccdFront)}
+                      src={
+                        selectedForm.cccdFront
+                          ? getImage(selectedForm.cccdFront)
+                          : "Không có" // hoặc ảnh placeholder nếu không có CCCD
+                      }
                       className="img-fluid rounded border"
                       alt="cccd front"
                     />
@@ -378,7 +393,11 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
                   <div className="col-md-12">
                     <label className="form-label">CCCD Mặt sau</label>
                     <img
-                      src={getImage(selectedForm.cccdBack)}
+                      src={
+                        selectedForm.cccdBack
+                          ? getImage(selectedForm.cccdBack)
+                          : "Không có" // ảnh mặc định nếu không có CCCD mặt sau
+                      }
                       className="img-fluid rounded border"
                       alt="cccd back"
                     />
@@ -386,7 +405,11 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
                   <div className="col-md-12">
                     <label className="form-label">Bằng cấp</label>
                     <img
-                      src={getImage(selectedForm.detail?.degree) || "Không có"}
+                      src={
+                        selectedForm.detail?.degree
+                          ? getImage(selectedForm.detail.degree)
+                          : "Không có"
+                      }
                       className="img-fluid rounded border"
                       alt="degree"
                     />
@@ -408,7 +431,7 @@ const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
                     <button
                       className="btn btn-danger"
                       onClick={() => {
-                        handleStatusChange(selectedForm.id, "Rejected");
+                        handleStatusChange(selectedForm.id, "Canceled");
                         setShowModal(false);
                       }}
                     >

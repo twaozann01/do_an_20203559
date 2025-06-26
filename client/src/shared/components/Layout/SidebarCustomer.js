@@ -65,7 +65,7 @@ const SidebarCustomer = () => {
             <div className="patient-details">
               <h5>
                 <i className="fas fa-user" />{" "}
-                {user?.role === "Repairman" ? "Thợ" : "Khách hàng"}
+                {user?.role === "Repairman" ? "Thợ sửa chữa" : "Khách hàng"}
               </h5>
               <h5 className="mb-0">
                 <i className="fas fa-map-marker-alt" /> {mainAddress?.city}
